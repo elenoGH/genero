@@ -146,46 +146,89 @@
 
             <!-- ACCESIBILIDAD -->
             <section>
-                <div class="col-md-2"></div>
-                <div class="text-center col-md-8">
-                    <h2 class="text-uppercase">Conoce la composición de las Cámaras por género</h2>
-                    <span class="pleca"></span>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><br>
+              <div class="text-center col-md-8 col-md-offset-2">
+                <h2 class="text-uppercase">Conoce la composición de las Cámaras por género</h2>
+                <span class="pleca"></span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><br>
+              </div>
+              <div class="container">
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+              		<canvas id="chart"></canvas>
+              	</div>
+                <div class="col-md-12">
+                  <div class="col-md-3">
+                    <label class="text-uppercase">Tipo de Cámara</label>
+                    <select class="form-control">
+                      <option>Senadores</option>
+                      <option>Diputados</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="text-uppercase">Entidad federativa</label>
+                    <select class="form-control">
+                      <option>TODAS LAS ENTIDADES</option>
+                      <option>Aguascalientes</option>
+                      <option>Baja California</option>
+                      <option>Baja California Sur</option>
+                      <option>Campeche</option>
+                      <option>Chiapas</option>
+                      <option>Chihuahua</option>
+                      <option>Coahuila de Zaragoza</option>
+                      <option>Etc...</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="text-uppercase">Partido político</label>
+                    <select class="form-control">
+                      <option>TODOS LOS PARTIDOS</option>
+                      <option>PAN</option>
+                      <option>PRI</option>
+                      <option>PRD</option>
+                      <option>PVEM</option>
+                      <option>PT</option>
+                      <option>MC</option>
+                      <option>PNA</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2 m-t-30">
+                    <button type="submit" class="btn btn-primary" id="">Buscar</button>
+                  </div>
                 </div>
-                <div class="container">
-                    <div class="row p-t-20 p-b-20">
-                        <div class="col-xs-6 col-sm-3">
-                            <label class="text-uppercase">Tipo de Cámara</label>
-                            <select class="form-control" name="tipo-camara" id="tipo-camara">
-                                <option value="" selected="selected">-- Selecciona</option>
-                                <option value="senadores">Senadores</option>
-                                <option value="diputados">Diputados</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <label class="text-uppercase">Periodo</label>
-                            <select class="form-control" name="periodo" id="periodo">
-                                <option value="" selected="selected">-- Selecciona</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <label class="text-uppercase">Partido político</label>
-                            <select class="form-control" name="partido_politico" id="partido_politico">
-                                <option value="" selected="selected">-- Selecciona</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 m-t-30">
-                            <button name="search-data" type="button" 
-                                    id="search-data" 
-                                    style="display: block; margin: 0 auto;" 
-                                    class="btn btn-primary">
-                                &nbsp;Buscar</button>
-                        </div>
-                    </div>
+              </div>
+            </section>
+            <hr class="no-margin">
+            <section class=" no-padding">
+              <div class="text-center m-t-40">
+                <h2 class="text-uppercase">Consulta más datos de Género</h2>
+                <span class="pleca"></span>
+                <p>Da click en la base de datos que quieras descargar, consectetur adipiscing elit. Nunc auctor nibh a enim luctus, et facilisis est vehicula.</p>
+                <!--aca el div para las graficas-->
+                <div class="container clearfix">
+                <div class="row">
+                <div class="col-md-3 text-center">
+                  <img src="images/mujeres-candidatas.jpg" alt="">
+                  <h4>Mujeres Candidatas</h4>
+                  <p>Lorem ipsum dolor sit <a class="uline" href="db/mujeres-candidatas/federal.zip">Federal</a> lorem ipsum <a class="uline" href="db/mujeres-candidatas/estatal.zip">Estatal</a></p>
                 </div>
-                <div class="center-block" id="canvas-container" style="width:40%;">
-                    <canvas id="chart" width="500" height="350"></canvas>
+                <div class="col-md-3 text-center">
+                  <img src="images/mujeres-candidatas.jpg" alt="">
+                  <h4>Mujeres en cargos públicos</h4>
+                  <p>Lorem ipsum <a class="uline" href="db/mujeres-cargos-publicos/integrantes-opl.xlsx">Integrantes OPL</a> lorem <a class="uline" href="db/mujeres-cargos-publicos/secretarias-estatales.xlsx">Secretarías Estatales</a> lorem ipsum <a class="uline" href="db/mujeres-cargos-publicos/secretarias-federales.xlsx">Secretarías Federales</a></p>
                 </div>
+                <div class="col-md-3 text-center">
+                  <img src="images/mujeres-leyes.jpg" alt="">
+                  <h4>Mujeres en las normas</h4>
+                  <p>Lorem ipsum <a class="uline" href="db/mujeres-en-normas/mujeres-en-las-normas.xlsx">Mujeres en las Normas</a> lorem <a class="uline" href="db/mujeres-en-normas/aplicacion-indice-fortaleza.xlsx">Aplicación de indice de fortalezas</a></p>
+                </div>
+                <div class="col-md-3 text-center">
+                  <img src="images/mujeres-militantes.jpg" alt="">
+                  <h4>Mujeres Militantes</h4>
+                  <p>Lorem ipsum <a class="uline" href="db/mujeres-militantes/mujeres-militantes.xlsx">Mujeres militantes</a> lorem <a class="uline" href="db/mujeres-militantes/base-pat.xlsx">Base PAT</a></p>
+                </div>
+              </div>
+                </div>
+              </div>
             </section>
             <hr class="no-margin">
             <!-- FOOTER -->
@@ -293,11 +336,69 @@
 
         <!-- Custom js file -->
         <script src="js/custom.js"></script>
-        <script language="javascript">
+        <script type="text/javascript">
+        $(document).ready(function(){
+          var data = {
+            type: "line",
+            data : {
+              datasets :[{
+                label: "Hombres",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(100,147,163,0.4)",
+                borderColor: "rgba(100,147,163,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(100,147,163,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(100,147,163,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [441, 463, 425, 414, 417, 385, 386, 358, 315, 287,],
+                spanGaps: false,
+              }, {
+                label: "Mujeres",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(161,26,51,0.4)",
+                borderColor: "rgba(161,26,51,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(161,26,51,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(161,26,51,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [59, 37, 75, 86, 83, 115, 114, 142, 185, 213,],
+                spanGaps: false,
+              }],
+              labels : ["1988-1991", "1991-1994", "1994-1997", "1997-2000", "2000-2003", "2003-2006", "2006-2009", "2009-2012", "2012-2015", "2015-2018"],
+            },
+            options : {
+              responsive : true,
+            }
+          };
+          var canvas = document.getElementById('chart').getContext('2d');
+          window.pie = new Chart(canvas, data);
+        });
+        </script>
+        <!--<script language="javascript">
             $(document).ready(function () {
                 $("#periodo").prop("disabled", true);
                 $("#partido_politico").prop("disabled", true);
-                
+
                 $("#tipo-camara").change(function () {
                     $("#tipo-camara option:selected").each(function () {
                         tipo_camara = $(this).val();
@@ -348,8 +449,8 @@
                     var canvas = document.getElementById('chart').getContext('2d');
                     window.pie = new Chart(canvas, datos);
                     });
-                });                
+                });
             });
-        </script>
+        </script>-->
     </body>
 </html>
