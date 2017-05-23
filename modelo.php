@@ -23,6 +23,28 @@
         die;
     }
     
+    if (isset($_POST['partido_politico'])) {
+        $array_data = array();
+        $sql = " select partido_politico
+        from mujeres_electas_ine
+        where partido_politico not in ('Total')
+        group by partido_politico
+        order by partido_politico asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'part_pol' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
     if (isset($_POST["search_data"])) {
         
         $search_data = $_POST["search_data"];

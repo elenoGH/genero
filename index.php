@@ -346,10 +346,14 @@
                     $("#entidad-federativa").html(option_entidades);
                 });
                 
-//                $.post("modelo.php", {partido_politico:true}, function (data) {
-//                    var obj = JSON.parse(data);
-////                    $("#partido_politico").html(data);
-//                });
+                $.post("modelo.php", {partido_politico:true}, function (data) {
+                    var array_obj_pp = JSON.parse(data);
+                    var option_pp = "<option value='' selected='selected'>-- Todos</option>";
+                    $.each(array_obj_pp, function(index_, value_){
+                        option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
+                    });
+                    $("#partido_politico").html(option_pp);
+                });
                 
                 $("#tipo-camara").change(function () {
 //                    $("#tipo-camara option:selected").each(function () {
@@ -361,17 +365,6 @@
 //                        });
 //                    });
                 });
-//                $("#periodo").change(function () {
-//                    $("#periodo option:selected").each(function () {
-//                        periodo_ = $(this).val();
-//                        tipo_camara = $('#tipo-camara').val();
-//                        $.post("modelo.php", {tipo_camara_de:tipo_camara, periodo_legislatura: periodo_}, function (data) {
-//                            $("#partido_politico").prop("disabled", false);
-//                            var obj = JSON.parse(data);
-//                            $("#partido_politico").html(obj.option_part_pol);
-//                        });
-//                    });
-//                });
                 $('#search-data').on('click', function(event){
                     var t_camara = $('#tipo-camara').val();
                     var entidad_federativa = $('#entidad-federativa').val();
@@ -456,9 +449,6 @@
                         });
                     });
                 });
-                
-
-          
             });
         </script>
     </body>
