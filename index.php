@@ -179,9 +179,9 @@
                     </select>
                   </div>
                   <div class="col-md-2 m-t-30">
-                    <button name="search-data" type="button" 
-                                    id="search-data" 
-                                    style="display: block; margin: 0 auto;" 
+                    <button name="search-data" type="button"
+                                    id="search-data"
+                                    style="display: block; margin: 0 auto;"
                                     class="btn btn-primary">
                                 &nbsp;Buscar</button>
                   </div>
@@ -331,7 +331,7 @@
             $(document).ready(function () {
                 $("#entidad-federativa").prop("disabled", true);
                 $("#partido_politico").prop("disabled", true);
-                
+
                 /**
                  * traemos las entidades federativas (estados)
                  */
@@ -341,10 +341,10 @@
                     $.each(array_obj_ent, function( index, value ) {
                         option_entidades = option_entidades + "<option value='"+index+"'>"+value.estado+"</option>";
                     });
-                    
+
                     $("#entidad-federativa").html(option_entidades);
                 });
-                
+
                 $.post("modelo.php", {partido_politico:true}, function (data) {
                     var array_obj_pp = JSON.parse(data);
                     var option_pp = "<option value='' selected='selected'>-- Todos</option>";
@@ -353,7 +353,7 @@
                     });
                     $("#partido_politico").html(option_pp);
                 });
-                
+
                 $("#tipo-camara").change(function () {
                     $("#tipo-camara option:selected").each(function () {
                         tipo_camara = $(this).val();
@@ -388,7 +388,7 @@
                         }
                     });
                 });
-                
+
                 $("#entidad-federativa").change(function () {
                     tipo_camara = $('#tipo-camara').val();
                     entidad_fed = $('#entidad-federativa').val();
@@ -402,7 +402,7 @@
                         $("#partido_politico").html(option_pp);
                     });
                 });
-                    
+
                 $('#search-data').on('click', function(event){
                     var t_camara = $('#tipo-camara').val();
                     var entidad_federativa = $('#entidad-federativa').val();
@@ -418,7 +418,7 @@
                         var array_label_x = [];
                         var array_data_hombres = [];
                         var array_data_mujeres = [];
-                        
+
                         $.each(array_data_search, function( index, value ) {
                             /**
                              * Tipo de Principio de Representación
@@ -427,25 +427,25 @@
                             array_label_x.push(value.anio_ini+'-'+value.anio_fin);
                             array_data_hombres.push(parseInt(value.totales_hombres_suma));
                             array_data_mujeres.push(parseInt(value.totales_mujeres_suma));
-                            
+
                             var datos = {
                                 type: "line",
                                 data : {
                                   datasets :[{
                                     label: "Hombres",
-                                    fill: false,
+                                    fill: true,
                                     lineTension: 0,
-                                    backgroundColor: "rgba(100,147,163,0.4)",
-                                    borderColor: "rgba(100,147,163,1)",
+                                    backgroundColor: "rgba(0,50,136,0.1)",
+                                    borderColor: "rgba(0,50,136,1)",
                                     borderCapStyle: 'butt',
                                     borderDash: [],
                                     borderDashOffset: 0.0,
                                     borderJoinStyle: 'miter',
-                                    pointBorderColor: "rgba(100,147,163,1)",
+                                    pointBorderColor: "rgba(0,50,136,1)",
                                     pointBackgroundColor: "#fff",
                                     pointBorderWidth: 1,
                                     pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: "rgba(100,147,163,1)",
+                                    pointHoverBackgroundColor: "rgba(0,50,136,1)",
                                     pointHoverBorderColor: "rgba(220,220,220,1)",
                                     pointHoverBorderWidth: 2,
                                     pointRadius: 1,
@@ -454,19 +454,19 @@
                                     spanGaps: false,
                                   }, {
                                     label: "Mujeres",
-                                    fill: false,
+                                    fill: true,
                                     lineTension: 0,
-                                    backgroundColor: "rgba(161,26,51,0.4)",
-                                    borderColor: "rgba(161,26,51,1)",
+                                    backgroundColor: "rgba(201,91,50,0.1)",
+                                    borderColor: "rgba(201,91,50,1)",
                                     borderCapStyle: 'butt',
                                     borderDash: [],
                                     borderDashOffset: 0.0,
                                     borderJoinStyle: 'miter',
-                                    pointBorderColor: "rgba(161,26,51,1)",
+                                    pointBorderColor: "rgba(201,91,50,1)",
                                     pointBackgroundColor: "#fff",
                                     pointBorderWidth: 1,
                                     pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: "rgba(161,26,51,1)",
+                                    pointHoverBackgroundColor: "rgba(201,91,50,1)",
                                     pointHoverBorderColor: "rgba(220,220,220,1)",
                                     pointHoverBorderWidth: 2,
                                     pointRadius: 1,
@@ -482,7 +482,7 @@
                               };
                               var canvas = document.getElementById('chart').getContext('2d');
                               window.pie = new Chart(canvas, datos);
-                    
+
 //                            console.log(index+' '+value.legistalura+' '+value.anio_ini+' '+value.anio_fin+' '+value.totales_mujeres_suma+' '+value.totales_hombres_suma);
                         });
                     });
