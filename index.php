@@ -336,15 +336,19 @@
                 /**
                  * traemos las entidades federativas (estados)
                  */
-//                $.post("modelo.php", {entidades:true}, function (data) {
-////                    $("#entidad-federativa").prop("disabled", false);
-//                    var obj = JSON.parse(data);
-//                    $("#entidad-federativa").html(obj.entidades);
-//                });
-//                
+                $.post("modelo.php", {entidades:true}, function (data) {
+                    var array_obj_ent = JSON.parse(data);
+                    var option_entidades = "<option value='' selected='selected'>-- Todas</option>";
+                    $.each(array_obj_ent, function( index, value ) {
+                        option_entidades = option_entidades + "<option value='"+index+"'>"+value.estado+"</option>";
+                    });
+                    
+                    $("#entidad-federativa").html(option_entidades);
+                });
+                
 //                $.post("modelo.php", {partido_politico:true}, function (data) {
-////                    var obj = JSON.parse(data);
-//                    $("#partido_politico").html(data);
+//                    var obj = JSON.parse(data);
+////                    $("#partido_politico").html(data);
 //                });
                 
                 $("#tipo-camara").change(function () {
@@ -380,98 +384,77 @@
                     }, function (data) {
                         console.log(JSON.parse(data));
                         var array_data_search = JSON.parse(data);
+                        var array_label_x = [];
+                        var array_data_hombres = [];
+                        var array_data_mujeres = [];
+                        
                         $.each(array_data_search, function( index, value ) {
                             /**
                              * Tipo de Principio de Representación
                              * mayoria relativa, primera minoria, proporcional
                              */
+                            array_label_x.push(value.anio_ini+'-'+value.anio_fin);
+                            array_data_hombres.push(parseInt(value.totales_hombres_suma));
+                            array_data_mujeres.push(parseInt(value.totales_mujeres_suma));
                             
-                            console.log(index+' '+value.legistalura+' '+value.anio_ini+' '+value.anio_fin+' '+value.totales_mujeres_suma+' '+value.totales_hombres_suma);
+                            var datos = {
+                                type: "line",
+                                data : {
+                                  datasets :[{
+                                    label: "Hombres",
+                                    fill: false,
+                                    lineTension: 0,
+                                    backgroundColor: "rgba(100,147,163,0.4)",
+                                    borderColor: "rgba(100,147,163,1)",
+                                    borderCapStyle: 'butt',
+                                    borderDash: [],
+                                    borderDashOffset: 0.0,
+                                    borderJoinStyle: 'miter',
+                                    pointBorderColor: "rgba(100,147,163,1)",
+                                    pointBackgroundColor: "#fff",
+                                    pointBorderWidth: 1,
+                                    pointHoverRadius: 5,
+                                    pointHoverBackgroundColor: "rgba(100,147,163,1)",
+                                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                                    pointHoverBorderWidth: 2,
+                                    pointRadius: 1,
+                                    pointHitRadius: 10,
+                                    data: array_data_hombres,
+                                    spanGaps: false,
+                                  }, {
+                                    label: "Mujeres",
+                                    fill: false,
+                                    lineTension: 0,
+                                    backgroundColor: "rgba(161,26,51,0.4)",
+                                    borderColor: "rgba(161,26,51,1)",
+                                    borderCapStyle: 'butt',
+                                    borderDash: [],
+                                    borderDashOffset: 0.0,
+                                    borderJoinStyle: 'miter',
+                                    pointBorderColor: "rgba(161,26,51,1)",
+                                    pointBackgroundColor: "#fff",
+                                    pointBorderWidth: 1,
+                                    pointHoverRadius: 5,
+                                    pointHoverBackgroundColor: "rgba(161,26,51,1)",
+                                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                                    pointHoverBorderWidth: 2,
+                                    pointRadius: 1,
+                                    pointHitRadius: 10,
+                                    data: array_data_mujeres,
+                                    spanGaps: false,
+                                  }],
+                                  labels : array_label_x,
+                                },
+                                options : {
+                                  responsive : true,
+                                }
+                              };
+                              var canvas = document.getElementById('chart').getContext('2d');
+                              window.pie = new Chart(canvas, datos);
+                    
+//                            console.log(index+' '+value.legistalura+' '+value.anio_ini+' '+value.anio_fin+' '+value.totales_mujeres_suma+' '+value.totales_hombres_suma);
                         });
                     });
-                    var datos = {
-                      type: "line",
-                      data : {
-                        datasets :[{
-                          label: "Hombres",
-                          fill: false,
-                          lineTension: 0,
-                          backgroundColor: "rgba(100,147,163,0.4)",
-                          borderColor: "rgba(100,147,163,1)",
-                          borderCapStyle: 'butt',
-                          borderDash: [],
-                          borderDashOffset: 0.0,
-                          borderJoinStyle: 'miter',
-                          pointBorderColor: "rgba(100,147,163,1)",
-                          pointBackgroundColor: "#fff",
-                          pointBorderWidth: 1,
-                          pointHoverRadius: 5,
-                          pointHoverBackgroundColor: "rgba(100,147,163,1)",
-                          pointHoverBorderColor: "rgba(220,220,220,1)",
-                          pointHoverBorderWidth: 2,
-                          pointRadius: 1,
-                          pointHitRadius: 10,
-                          data: [441, 463, 425, 414, 417, 385, 386, 358, 315, 287,],
-                          spanGaps: false,
-                        }, {
-                          label: "Mujeres",
-                          fill: false,
-                          lineTension: 0,
-                          backgroundColor: "rgba(161,26,51,0.4)",
-                          borderColor: "rgba(161,26,51,1)",
-                          borderCapStyle: 'butt',
-                          borderDash: [],
-                          borderDashOffset: 0.0,
-                          borderJoinStyle: 'miter',
-                          pointBorderColor: "rgba(161,26,51,1)",
-                          pointBackgroundColor: "#fff",
-                          pointBorderWidth: 1,
-                          pointHoverRadius: 5,
-                          pointHoverBackgroundColor: "rgba(161,26,51,1)",
-                          pointHoverBorderColor: "rgba(220,220,220,1)",
-                          pointHoverBorderWidth: 2,
-                          pointRadius: 1,
-                          pointHitRadius: 10,
-                          data: [59, 37, 75, 86, 83, 115, 114, 142, 185, 213,],
-                          spanGaps: false,
-                        }],
-                        labels : ["1988-1991", "1991-1994", "1994-1997", "1997-2000", "2000-2003", "2003-2006", "2006-2009", "2009-2012", "2012-2015", "2015-2018"],
-                      },
-                      options : {
-                        responsive : true,
-                      }
-                    };
-                    var canvas = document.getElementById('chart').getContext('2d');
-                    window.pie = new Chart(canvas, datos);
-                    
-//                    $.post("modelo.php", {search_data: {tipo_camara:$('#tipo-camara').val(), periodo:$('#periodo').val(), partido_politico:$('#partido_politico').val()}}, function (data) {
-//                        console.log(data);
-//                        var obj_porcentajes = JSON.parse(data);
-//                    var datos = {
-//                        type: "doughnut",
-//                        data: {
-//                            datasets: [{
-//                                    data: [
-//                                        obj_porcentajes.totales_mujeres_porcentaje,
-//                                        obj_porcentajes.totales_hombres_porcentaje,
-//                                    ],
-//                                    backgroundColor: [
-//                                        "#DB9397",
-//                                        "#6493A3",
-//                                    ],
-//                                }],
-//                            labels: [
-//                                "Mujeres",
-//                                "Hombres",
-//                            ]
-//                        },
-//                        options: {
-//                            responsive: true,
-//                        }
-//                    };
-//                    var canvas = document.getElementById('chart').getContext('2d');
-//                    window.pie = new Chart(canvas, datos);
-//                    });
                 });
                 
 
