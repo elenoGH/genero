@@ -329,9 +329,8 @@
         <script src="js/custom.js"></script>
         <script language="javascript">
             $(document).ready(function () {
-                //$("#periodo").prop("disabled", true);
-//                $("#entidad-federativa").prop("disabled", true);
-//                $("#partido_politico").prop("disabled", true);
+                $("#entidad-federativa").prop("disabled", true);
+                $("#partido_politico").prop("disabled", true);
                 
                 /**
                  * traemos las entidades federativas (estados)
@@ -356,15 +355,54 @@
                 });
                 
                 $("#tipo-camara").change(function () {
-//                    $("#tipo-camara option:selected").each(function () {
-//                        tipo_camara = $(this).val();
-//                        $.post("modelo.php", {tipo_camara: tipo_camara}, function (data) {
-//                            $("#periodo").prop("disabled", false);
-//                            var obj = JSON.parse(data);
-//                            $("#periodo").html(obj.options_tc);
-//                        });
-//                    });
+                    $("#tipo-camara option:selected").each(function () {
+                        tipo_camara = $(this).val();
+                        if (tipo_camara == 0) {
+                            $('#partido_politico').val('');
+                            $("#partido_politico").prop("disabled", true);
+                            $('#entidad-federativa').val('');
+                            $("#entidad-federativa").prop("disabled", true);
+                        } else if (tipo_camara == 1 || tipo_camara == 2) {
+                            $('#entidad-federativa').val('');
+                            $("#entidad-federativa").prop("disabled", true);
+                            $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara}, function (data) {
+                                $("#partido_politico").prop("disabled", false);
+                                var array_obj_pp = JSON.parse(data);
+                                var option_pp = "<option value='' selected='selected'>-- Todos</option>";
+                                $.each(array_obj_pp, function(index_, value_){
+                                    option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
+                                });
+                                $("#partido_politico").html(option_pp);
+                            });
+                        }else {
+                            $("#entidad-federativa").prop("disabled", false);
+                            $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara}, function (data) {
+                                $("#partido_politico").prop("disabled", false);
+                                var array_obj_pp = JSON.parse(data);
+                                var option_pp = "<option value='' selected='selected'>-- Todos</option>";
+                                $.each(array_obj_pp, function(index_, value_){
+                                    option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
+                                });
+                                $("#partido_politico").html(option_pp);
+                            });
+                        }
+                    });
                 });
+                
+                $("#entidad-federativa").change(function () {
+                    tipo_camara = $('#tipo-camara').val();
+                    entidad_fed = $('#entidad-federativa').val();
+                    $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara, and_entidad_fed_:entidad_fed}, function (data) {
+                        $("#partido_politico").prop("disabled", false);
+                        var array_obj_pp = JSON.parse(data);
+                        var option_pp = "<option value='' selected='selected'>-- Todos</option>";
+                        $.each(array_obj_pp, function(index_, value_){
+                            option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
+                        });
+                        $("#partido_politico").html(option_pp);
+                    });
+                });
+                    
                 $('#search-data').on('click', function(event){
                     var t_camara = $('#tipo-camara').val();
                     var entidad_federativa = $('#entidad-federativa').val();
