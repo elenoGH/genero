@@ -109,11 +109,15 @@
         if ($result = mysqli_query($con, $sql)) {
             $count = 0;
             while ($row = mysqli_fetch_row($result)) {
+                if (isset($row[6])) {
                     $th_suma = $row[6];
+                } else {
+                    $th_suma = 0;
+                }
                 if (isset($row[7])) {
                     $tm_suma = $row[7];
                 } else {
-                    $tm_suma = $row[0];
+                    $tm_suma = 0;
                 }
                 
                 $array_data[$row[0].$row[8].$row[9].$row[10]] = array(
