@@ -103,7 +103,8 @@
             from mujeres_electas_ine
             where id > 0"
             .$and_cond.
-            " group by legistalura, anio_ini, anio_fin
+            " and partido_politico not in ('Total')
+            group by legistalura, anio_ini, anio_fin
             order by anio_ini asc ";
         
         if ($result = mysqli_query($con, $sql)) {
