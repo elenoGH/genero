@@ -87,6 +87,9 @@
                                 &nbsp;Buscar</button>
                   </div>
                 </div>
+                  </div>
+                  <br><br><br>
+                  <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <canvas id="chart"></canvas>
               	</div>
@@ -95,7 +98,6 @@
         </div>
         <!-- /WRAPPER -->
         <!-- IR ARRIBA -->
-        <a class="gototop gototop-button" href="#"><i class="fa fa-chevron-up"></i></a>
 
         <!-- Componenetes -->
         <script src="js/theme-functions.js"></script>
