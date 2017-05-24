@@ -61,13 +61,13 @@
                   <div class="col-md-3">
                     <label class="text-uppercase">Tipo de Cámara</label>
                     <select class="form-control" name="tipo-camara" id="tipo-camara">
-                        <option value="0" selected="selected">-- Selecciona</option>
+                        <option value="0">-- Todas</option>
                         <option value="1">Senadores</option>
                         <option value="2">Diputados - Federal</option>
                         <option value="3">Diputados - Estatal</option>
                     </select>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-3" id="div-entidad-federativa">
                     <label class="text-uppercase">Entidad federativa</label>
                     <select class="form-control" name="entidad-federativa" id="entidad-federativa">
                       <option value="" selected="selected">-- Todas</option>
@@ -104,7 +104,8 @@
         <script src="js/custom.js"></script>
         <script language="javascript">
             $(document).ready(function () {
-                $("#entidad-federativa").prop("disabled", true);
+                $("#div-entidad-federativa").addClass('hide')
+//                $("#entidad-federativa").prop("disabled", true);
                 $("#partido_politico").prop("disabled", true);
 
                 /**
@@ -136,10 +137,12 @@
                             $('#partido_politico').val('');
                             $("#partido_politico").prop("disabled", true);
                             $('#entidad-federativa').val('');
-                            $("#entidad-federativa").prop("disabled", true);
+                            $("#div-entidad-federativa").addClass('hide');
+//                            $("#entidad-federativa").prop("disabled", true);
                         } else if (tipo_camara == 1 || tipo_camara == 2) {
                             $('#entidad-federativa').val('');
-                            $("#entidad-federativa").prop("disabled", true);
+                            $("#div-entidad-federativa").addClass('hide');
+//                            $("#entidad-federativa").prop("disabled", true);
                             $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara}, function (data) {
                                 $("#partido_politico").prop("disabled", false);
                                 var array_obj_pp = JSON.parse(data);
@@ -150,7 +153,8 @@
                                 $("#partido_politico").html(option_pp);
                             });
                         }else {
-                            $("#entidad-federativa").prop("disabled", false);
+                            $("#div-entidad-federativa").removeClass('hide');
+//                            $("#entidad-federativa").prop("disabled", false);
                             $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara}, function (data) {
                                 $("#partido_politico").prop("disabled", false);
                                 var array_obj_pp = JSON.parse(data);
@@ -177,91 +181,102 @@
                         $("#partido_politico").html(option_pp);
                     });
                 });
-
+                var lienso = null;
+                get_grafica('0', '', '');
                 $('#search-data').on('click', function(event){
                     var t_camara = $('#tipo-camara').val();
                     var entidad_federativa = $('#entidad-federativa').val();
                     var partido_politico = $('#partido_politico').val();
+                    get_grafica(t_camara, entidad_federativa, partido_politico);
+                    
+                });
+                function get_grafica(t_camara, entidad_federativa, partido_politico)
+                {
                     $.post("modelo.php", {search_data: {
                             tipo_camara_:t_camara
                             , entidad_fed_:entidad_federativa
                             , partido_politico_:partido_politico
                         }
                     }, function (data) {
+                        if(lienso != undefined || lienso != null){
+                            lienso.destroy();
+                        }
                         console.log(JSON.parse(data));
                         var array_data_search = JSON.parse(data);
-                        var array_label_x = [];
-                        var array_data_hombres = [];
-                        var array_data_mujeres = [];
+                        var array_label_x = [1980-1980];
+                        var array_data_hombres = [0];
+                        var array_data_mujeres = [0];
 
                         $.each(array_data_search, function( index, value ) {
                             /**
                              * Tipo de Principio de Representación
                              * mayoria relativa, primera minoria, proporcional
                              */
+//                            if () {
+//                                
+//                            }
+                            
                             array_label_x.push(value.anio_ini+'-'+value.anio_fin);
                             array_data_hombres.push(parseInt(value.totales_hombres_suma));
                             array_data_mujeres.push(parseInt(value.totales_mujeres_suma));
-
-                            var datos = {
-                                type: "line",
-                                data : {
-                                  datasets :[{
-                                    label: "Hombres",
-                                    fill: true,
-                                    lineTension: 0,
-                                    backgroundColor: "rgba(201,91,50,0.1)",
-                                    borderColor: "rgba(201,91,50,1)",
-                                    borderCapStyle: 'butt',
-                                    borderDash: [],
-                                    borderDashOffset: 0.0,
-                                    borderJoinStyle: 'miter',
-                                    pointBorderColor: "rgba(201,91,50,1)",
-                                    pointBackgroundColor: "#fff",
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: "rgba(201,91,50,1)",
-                                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                                    pointHoverBorderWidth: 2,
-                                    pointRadius: 1,
-                                    pointHitRadius: 10,
-                                    data: array_data_hombres,
-                                    spanGaps: false,
-                                  }, {
-                                    label: "Mujeres",
-                                    fill: true,
-                                    lineTension: 0,
-                                    backgroundColor: "rgba(0,150,136,0.1)",
-                                    borderColor: "rgba(0,150,136,1)",
-                                    borderCapStyle: 'butt',
-                                    borderDash: [],
-                                    borderDashOffset: 0.0,
-                                    borderJoinStyle: 'miter',
-                                    pointBorderColor: "rgba(0,150,136,1)",
-                                    pointBackgroundColor: "#fff",
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: "rgba(0,150,136,1)",
-                                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                                    pointHoverBorderWidth: 2,
-                                    pointRadius: 1,
-                                    pointHitRadius: 10,
-                                    data: array_data_mujeres,
-                                    spanGaps: false,
-                                  }],
-                                  labels : array_label_x,
-                                },
-                                options : {
-                                  responsive : true,
-                                }
-                              };
-                              var canvas = document.getElementById('chart').getContext('2d');
-                              window.pie = new Chart(canvas, datos);
-
-//                            console.log(index+' '+value.legistalura+' '+value.anio_ini+' '+value.anio_fin+' '+value.totales_mujeres_suma+' '+value.totales_hombres_suma);
                         });
+                        var datos = {
+                            type: "line",
+                            data : {
+                              datasets :[{
+                                label: "Hombres",
+                                fill: true,
+                                lineTension: 0,
+                                backgroundColor: "rgba(201,91,50,0.1)",
+                                borderColor: "rgba(201,91,50,1)",
+                                borderCapStyle: 'butt',
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                borderJoinStyle: 'miter',
+                                pointBorderColor: "rgba(201,91,50,1)",
+                                pointBackgroundColor: "#fff",
+                                pointBorderWidth: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: "rgba(201,91,50,1)",
+                                pointHoverBorderColor: "rgba(220,220,220,1)",
+                                pointHoverBorderWidth: 2,
+                                pointRadius: 1,
+                                pointHitRadius: 10,
+                                data: array_data_hombres,
+                                spanGaps: false,
+                              }, {
+                                label: "Mujeres",
+                                fill: true,
+                                lineTension: 0,
+                                backgroundColor: "rgba(0,150,136,0.1)",
+                                borderColor: "rgba(0,150,136,1)",
+                                borderCapStyle: 'butt',
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                borderJoinStyle: 'miter',
+                                pointBorderColor: "rgba(0,150,136,1)",
+                                pointBackgroundColor: "#fff",
+                                pointBorderWidth: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: "rgba(0,150,136,1)",
+                                pointHoverBorderColor: "rgba(220,220,220,1)",
+                                pointHoverBorderWidth: 2,
+                                pointRadius: 1,
+                                pointHitRadius: 10,
+                                data: array_data_mujeres,
+                                spanGaps: false,
+                              }],
+                              labels : array_label_x,
+                            },
+                            options : {
+                              responsive : true,
+                            }
+                          };
+                          var canvas = document.getElementById('chart').getContext('2d');
+                          lienso = new Chart(canvas, datos);
+                          window.pie = lienso;
                     });
-                });
+                }
             });
         </script>
     </body>
