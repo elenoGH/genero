@@ -4,7 +4,7 @@
     if (isset($_POST["entidades"])) {
         $array_data = array();
         $sql = " select estado
-            from mujeres_electas_ine
+            from wp_ine_mujeres_electas
             where estado is not null
             GROUP by estado
             order by estado asc ";
@@ -48,7 +48,7 @@
         }
         
         $sql = " select partido_politico
-        from mujeres_electas_ine
+        from wp_ine_mujeres_electas
         where partido_politico not in ('Total')
         ".$and_cond."
         group by partido_politico
@@ -100,7 +100,7 @@
                     , sum(tprp_mujeres) as tprp_mujeres_suma, sum(tprp_hombres) as tprp_hombres_suma
                     , sum(totales_hombres) as totales_hombres_suma, sum(totales_mujeres) as totales_mujeres_suma
                     , legistalura, anio_ini, anio_fin
-            from mujeres_electas_ine
+            from wp_ine_mujeres_electas
             where id > 0"
             .$and_cond.
             " and partido_politico not in ('Total')
