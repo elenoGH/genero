@@ -4,7 +4,7 @@
     if (isset($_POST["entidades"])) {
         $array_data = array();
         $sql = " select estado
-            from wp_ine_mujeres_electas
+            from mujeres_electas_ine
             where estado is not null
             GROUP by estado
             order by estado asc ";
@@ -48,7 +48,7 @@
         }
         
         $sql = " select partido_politico
-        from wp_ine_mujeres_electas
+        from mujeres_electas_ine
         where partido_politico not in ('Total')
         ".$and_cond."
         group by partido_politico
@@ -100,7 +100,7 @@
                     , sum(tprp_mujeres) as tprp_mujeres_suma, sum(tprp_hombres) as tprp_hombres_suma
                     , sum(totales_hombres) as totales_hombres_suma, sum(totales_mujeres) as totales_mujeres_suma
                     , legistalura, anio_ini, anio_fin
-            from wp_ine_mujeres_electas
+            from mujeres_electas_ine
             where id > 0"
             .$and_cond.
             " and partido_politico not in ('Total')
@@ -138,4 +138,42 @@
         echo json_encode($array_data);
         die;
     }
-?>
+    
+    
+/**
+ * Mujeres candidatas model
+ */
+    
+    if (isset($_POST["search_data_mc"])) {
+        
+        $search_data = $_POST["search_data_mc"];
+        $and_cond = "";
+        
+        
+        $array_data = array();
+        $sql = " SELECT 
+            MAX(anio) as anio
+           ,SUM(CASE WHEN sexo = 'Hombre' THEN 1 END) AS hombre_suma
+           ,SUM(CASE WHEN sexo = 'Mujer' THEN 1 END) AS mujer_suma
+           ,SUM(CASE WHEN sexo IS NOT NULL THEN 1 ELSE 0 END) AS total
+        from wp_ine_mujeres_candidatas
+        GROUP BY anio
+        order by anio; ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            $count = 0;
+            while ($row = mysqli_fetch_row($result)) {
+                
+                $array_data[$row[0]] = array(
+                              'anio_ini' => $row[0]
+                            , 'totales_hombres_suma' => $row[1]
+                            , 'totales_mujeres_suma' => $row[2]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
