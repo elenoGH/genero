@@ -145,11 +145,31 @@
  */
     
     if (isset($_POST["search_data_mc"])) {
-        
+
         $search_data = $_POST["search_data_mc"];
         $and_cond = "";
-        
-        
+
+        if (isset($search_data['e_f_']) && !empty($search_data['e_f_'])) {
+            $and_cond = $and_cond." and f_e = '".$search_data['e_f_']."' ";
+        }
+        if (isset($search_data['cat3_']) && !empty($search_data['cat3_'])) {
+            $and_cond = $and_cond." and camara = '".$search_data['cat3_']."' ";
+        }
+        if (isset($search_data['part_pol_']) && !empty($search_data['part_pol_'])) {
+            $and_cond = $and_cond." and partido_politico_mc like '%".$search_data['part_pol_']."%' ";
+        }
+        if (isset($search_data['ent_fed_']) && !empty($search_data['ent_fed_'])) {
+            $and_cond = $and_cond." and estado like '%".$search_data['ent_fed_']."%' ";
+        }
+        if (isset($search_data['princ_rep_']) && !empty($search_data['princ_rep_'])) {
+            $and_cond = $and_cond." and principio_representacion like '%".$search_data['princ_rep_']."%' ";
+        }
+        if (isset($search_data['prop_sup_']) && !empty($search_data['prop_sup_'])) {
+            $and_cond = $and_cond." and propietario_suplente like '%".$search_data['prop_sup_']."%' ";
+        }
+        if (isset($search_data['per_ini_']) && !empty($search_data['per_ini_'])) {
+            $and_cond = $and_cond." and anio BETWEEN ".$search_data['per_ini_']." and ".$search_data['per_fin_']." ";
+        }
         $array_data = array();
         $sql = " SELECT 
             MAX(anio) as anio
@@ -157,17 +177,91 @@
            ,SUM(CASE WHEN sexo = 'Mujer' THEN 1 END) AS mujer_suma
            ,SUM(CASE WHEN sexo IS NOT NULL THEN 1 ELSE 0 END) AS total
         from wp_ine_mujeres_candidatas
+        where id > 0
+        ".$and_cond."
         GROUP BY anio
-        order by anio; ";
+        order by anio ";
         
         if ($result = mysqli_query($con, $sql)) {
             $count = 0;
             while ($row = mysqli_fetch_row($result)) {
-                
+
                 $array_data[$row[0]] = array(
                               'anio_ini' => $row[0]
                             , 'totales_hombres_suma' => $row[1]
                             , 'totales_mujeres_suma' => $row[2]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+
+
+    if (isset($_POST["entidades_mc"])) {
+        $array_data = array();
+        $sql = " select convert(cast(convert(estado using latin1) as binary) using utf8) AS estado
+            from wp_ine_mujeres_candidatas
+            where estado is not null
+            and estado != ''
+            GROUP by estado
+            order by estado asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'estado' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
+    if (isset($_POST['partido_politico_mc'])) {
+        $array_data = array();
+        $and_cond = "";
+               
+        $sql = " select convert(cast(convert(partido_politico_mc using latin1) as binary) using utf8) AS partido_politico_mc
+            from wp_ine_mujeres_candidatas 
+            where id > 0
+            and partido_politico_mc != ''
+            group by partido_politico_mc 
+            order by partido_politico_mc asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'part_pol' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
+    if (isset($_POST['periodos_mc'])) {
+        $array_data = array();
+        $and_cond = "";
+               
+        $sql = " select anio
+        from wp_ine_mujeres_candidatas
+        GROUP by anio
+        order by anio asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'periodo' => $row[0]
                         );
             }
             mysqli_free_result($result);

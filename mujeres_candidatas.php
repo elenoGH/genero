@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="shortcut icon" href="images/favicon.png">
@@ -60,63 +60,68 @@
                 <div class="col-md-12">
                  <div class="col-md-3">
                     <label class="text-uppercase">Categoria 2</label>
-                    <select class="form-control" name="tipo-camara" id="tipo-camara">
-                        <option value="0"></option>
-                        <option value="1">--Federal</option>
-                        <option value="2">--Estatal</option>
+                    <select class="form-control" name="ef_c1" id="ef_c1">
+                        <option value="">-- Todas</option>
+                        <option value="federal">Federal</option>
+                        <option value="estatal">Estatal</option>
                     </select>
                   </div>
                   <div class="col-md-3">
                     <label class="text-uppercase">Categoria 3</label>
-                    <select class="form-control" name="tipo-camara" id="tipo-camara">
-                        <option value="0"></option>
-                        <option value="1">Presidencia de la República</option>
-                        <option value="2">Gubernatura</option>
-                        <option value="3">Diputaciones</option>
-                        <option value="4">Senadurías</option>
-                        <option value="5">Congresos</option>
+                    <select class="form-control" name="categoria3" id="categoria3">
+                        <option value="">-- Todas</option>
+                        <option value="">Presidencia de la República</option>
+                        <option value="">Gubernatura</option>
+                        <option value="diputados">Diputaciones</option>
+                        <option value="senadores">Senadurías</option>
+                        <option value="">Congresos</option>
                     </select>
                   </div>
                   <div class="col-md-3">
                     <label class="text-uppercase">Partido Politico</label>
-                    <select class="form-control" name="tipo-camara" id="tipo-camara">
-                        <option value="0"></option>
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="text-uppercase">Periodo</label>
-                    <select class="form-control" name="tipo-camara" id="tipo-camara">
-                        <option value="0"></option>
-                    </select>
-                  </div>
-                  <!--div class="col-md-3">
-                    <label class="text-uppercase">Tipo de Cámara</label>
-                    <select class="form-control" name="tipo-camara" id="tipo-camara">
-                        <option value="0">-- Todas</option>
-                        <option value="1">Senadores</option>
-                        <option value="2">Diputados - Federal</option>
-                        <option value="3">Diputados - Estatal</option>
+                    <select class="form-control" name="part-pol" id="part-pol">
+                        <option value=""></option>
                     </select>
                   </div>
                   <div class="col-md-3" id="div-entidad-federativa">
                     <label class="text-uppercase">Entidad federativa</label>
-                    <select class="form-control" name="entidad-federativa" id="entidad-federativa">
+                    <select class="form-control" name="entidad-federativa-mc" id="entidad-federativa-mc">
                       <option value="" selected="selected">-- Todas</option>
                     </select>
                   </div>
-                  <div class="col-md-3">
-                    <label class="text-uppercase">Partido político</label>
-                    <select class="form-control" name="partido_politico" id="partido_politico">
-                        <option value="" selected="selected">-- Todos</option>
+                <div class="col-md-3">
+                    <label class="text-uppercase">Principio de representación</label>
+                    <select class="form-control" name="principio-rep" id="principio-rep">
+                        <option value="">--Todos</option>
+                        <option value="Mayoria Relativa">Mayoría Relativa</option>
+                        <option value="Representacion Proporcional">Representación Proporcional</option>
                     </select>
                   </div>
-                  <div class="col-md-2 m-t-30">
-                    <button name="search-data" type="button"
-                                    id="search-data"
-                                    style="display: block; margin: 0 auto;"
+                <div class="col-md-3">
+                    <label class="text-uppercase">Propietario/Suplente</label>
+                    <select class="form-control" name="prop-sup" id="prop-sup">
+                        <option value="">--Todos</option>
+                        <option value="Propietario">Propietario</option>
+                        <option value="Suplente">Suplente</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="text-uppercase">Periodo Inicial</label>
+                    <select class="form-control" name="periodo-ini" id="periodo-ini">
+                        <option value=""></option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="text-uppercase">Periodo Final</label>
+                    <select class="form-control" name="periodo-fin" id="periodo-fin">
+                        <option value=""></option>
+                    </select>
+                  </div>
+                    <div class="col-md-2 m-t-30">
+                    <button name="search-data-mc" type="button"
+                                    id="search-data-mc"
                                     class="btn btn-primary">
                                 &nbsp;Buscar</button>
-                  </div-->
                 </div>
                   </div>
                   <br><br><br>
@@ -137,98 +142,69 @@
         <script src="js/custom.js"></script>
         <script language="javascript">
             $(document).ready(function () {
-                $("#div-entidad-federativa").addClass('hide')
+//                $("#div-entidad-federativa").addClass('hide')
 //                $("#entidad-federativa").prop("disabled", true);
-                $("#partido_politico").prop("disabled", true);
+//                $("#partido_politico").prop("disabled", true);
 
                 /**
                  * traemos las entidades federativas (estados)
                  */
-                $.post("modelo.php", {entidades:true}, function (data) {
+                $.post("modelo.php", {entidades_mc:true}, function (data) {
                     var array_obj_ent = JSON.parse(data);
                     var option_entidades = "<option value='' selected='selected'>-- Todas</option>";
                     $.each(array_obj_ent, function( index, value ) {
                         option_entidades = option_entidades + "<option value='"+index+"'>"+value.estado+"</option>";
                     });
 
-                    $("#entidad-federativa").html(option_entidades);
+                    $("#entidad-federativa-mc").html(option_entidades);
                 });
 
-                $.post("modelo.php", {partido_politico:true}, function (data) {
+                $.post("modelo.php", {partido_politico_mc:true}, function (data) {
                     var array_obj_pp = JSON.parse(data);
                     var option_pp = "<option value='' selected='selected'>-- Todos</option>";
                     $.each(array_obj_pp, function(index_, value_){
                         option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
                     });
-                    $("#partido_politico").html(option_pp);
+                    $("#part-pol").html(option_pp);
                 });
-
-                $("#tipo-camara").change(function () {
-                    $("#tipo-camara option:selected").each(function () {
-                        tipo_camara = $(this).val();
-                        if (tipo_camara == 0) {
-                            $('#partido_politico').val('');
-                            $("#partido_politico").prop("disabled", true);
-                            $('#entidad-federativa').val('');
-                            $("#div-entidad-federativa").addClass('hide');
-//                            $("#entidad-federativa").prop("disabled", true);
-                        } else if (tipo_camara == 1 || tipo_camara == 2) {
-                            $('#entidad-federativa').val('');
-                            $("#div-entidad-federativa").addClass('hide');
-//                            $("#entidad-federativa").prop("disabled", true);
-                            $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara}, function (data) {
-                                $("#partido_politico").prop("disabled", false);
-                                var array_obj_pp = JSON.parse(data);
-                                var option_pp = "<option value='' selected='selected'>-- Todos</option>";
-                                $.each(array_obj_pp, function(index_, value_){
-                                    option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
-                                });
-                                $("#partido_politico").html(option_pp);
-                            });
-                        }else {
-                            $("#div-entidad-federativa").removeClass('hide');
-//                            $("#entidad-federativa").prop("disabled", false);
-                            $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara}, function (data) {
-                                $("#partido_politico").prop("disabled", false);
-                                var array_obj_pp = JSON.parse(data);
-                                var option_pp = "<option value='' selected='selected'>-- Todos</option>";
-                                $.each(array_obj_pp, function(index_, value_){
-                                    option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
-                                });
-                                $("#partido_politico").html(option_pp);
-                            });
-                        }
+                
+                $.post("modelo.php", {periodos_mc:true}, function (data) {
+                    var array_obj_pp = JSON.parse(data);
+                    var option_pp = "<option value='' selected='selected'>-- Todos</option>";
+                    $.each(array_obj_pp, function(index_, value_){
+                        option_pp = option_pp + "<option values='"+index_+"'>"+value_.periodo+"</option>";
                     });
+                    $("#periodo-ini").html(option_pp);
+                    $("#periodo-fin").html(option_pp);
                 });
-
-                $("#entidad-federativa").change(function () {
-                    tipo_camara = $('#tipo-camara').val();
-                    entidad_fed = $('#entidad-federativa').val();
-                    $.post("modelo.php", {partido_politico:true, and_tipo_camara_:tipo_camara, and_entidad_fed_:entidad_fed}, function (data) {
-                        $("#partido_politico").prop("disabled", false);
-                        var array_obj_pp = JSON.parse(data);
-                        var option_pp = "<option value='' selected='selected'>-- Todos</option>";
-                        $.each(array_obj_pp, function(index_, value_){
-                            option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
-                        });
-                        $("#partido_politico").html(option_pp);
-                    });
-                });
+                
                 var lienso = null;
-                get_grafica('0', '', '');
-                $('#search-data').on('click', function(event){
-                    var t_camara = $('#tipo-camara').val();
-                    var entidad_federativa = $('#entidad-federativa').val();
-                    var partido_politico = $('#partido_politico').val();
-                    get_grafica(t_camara, entidad_federativa, partido_politico);
+                get_grafica('', '', '', '', '', '', '', '');
+                $('#search-data-mc').on('click', function(event){
+                    
+                    var e_f = $('#ef_c1').val();
+                    var cat3 = $('#categoria3').val();
+                    var part_pol = $('#part-pol').val();
+                    var ent_fed = $('#entidad-federativa-mc').val();
+                    var princ_rep = $('#principio-rep').val();
+                    var prop_sup = $('#prop-sup').val();
+                    var per_ini = $("#periodo-ini").val();
+                    var per_fin = $("#periodo-fin").val();
+                    
+                    get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin);
                     
                 });
-                function get_grafica(t_camara, entidad_federativa, partido_politico)
+                function get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin)
                 {
                     $.post("modelo.php", {search_data_mc: {
-                            tipo_camara_:t_camara
-                            , entidad_fed_:entidad_federativa
-                            , partido_politico_:partido_politico
+                              e_f_:e_f
+                            , cat3_:cat3
+                            , part_pol_: part_pol
+                            , ent_fed_ : ent_fed
+                            , princ_rep_: princ_rep
+                            , prop_sup_ : prop_sup
+                            , per_ini_ : (per_ini!=''?parseInt(per_ini):'')
+                            , per_fin_ : (per_fin!=''?parseInt(per_fin):'')
                         }
                     }, function (data) {
                         if(lienso != undefined || lienso != null){
@@ -242,8 +218,8 @@
 
                         $.each(array_data_search, function( index, value ) {
                             array_label_x.push(parseInt(value.anio_ini));
-                            array_data_hombres.push(parseInt(value.totales_hombres_suma));
-                            array_data_mujeres.push(parseInt(value.totales_mujeres_suma));
+                            array_data_hombres.push(parseInt(value.totales_hombres_suma==null?0:value.totales_hombres_suma));
+                            array_data_mujeres.push(parseInt(value.totales_mujeres_suma==null?0:value.totales_mujeres_suma));
                         });
                         var datos = {
                             type: "line",
