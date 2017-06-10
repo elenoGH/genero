@@ -12,10 +12,6 @@
         <link href="utilidades/fontawesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
         <link href="utilidades/animateit/animate.min.css" rel="stylesheet">
 
-        <!-- Utilidades css -->
-        <link href="utilidades/owlcarousel/owl.carousel.css" rel="stylesheet">
-        <link href="utilidades/magnific-popup/magnific-popup.css" rel="stylesheet">
-
         <!-- Estilos css -->
         <link href="css/base-ine.css" rel="stylesheet">
         <link href="css/elementos-ine.css" rel="stylesheet">
@@ -23,29 +19,12 @@
         <link href="css/responsivo.css" rel="stylesheet">
         <link href="css/custom.css" rel="stylesheet" type="text/css" media="screen" />
 
-        <!--[if lt IE 9]>
-                        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-                <![endif]-->
-
-        <!-- FUENTES GOOGLE -->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,800,700,600%7CRaleway:100,300,600,700,800" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
-
-        <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
-        <link rel="stylesheet" property="stylesheet" href="utilidades/rs-plugin/css/settings.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="css/rs-plugin-styles.css" type="text/css" />
-
         <!--UTILIDADES SCRIPT-->
         <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
         <script src="utilidades/plugins-compressed.js"></script>
 
         <!-- SCRIPT GRAFICAS-->
         <script src="dist/chart.js"></script>
-        <script src="utils.js"></script>
-
-        <!-- SLIDER REVOLUTION 5.x SCRIPTS  -->
-        <script type="text/javascript" src="utilidades/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-        <script type="text/javascript" src="utilidades/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
     </head>
 
     <body class="wide">
@@ -72,10 +51,16 @@
                         <option value="">-- Todas</option>
                     </select>
                   </div>
+                  <div class="col-md-3" id="div-secretarias">
+                    <label class="text-uppercase">Secretarías</label>
+                    <select class="form-control" name="secretarias" id="secretarias">
+                        <option value="">-- Todas</option>
+                    </select>
+                  </div>
                   <div class="col-md-3" id="div-partido-politico">
                     <label class="text-uppercase">Partido Politico</label>
                     <select class="form-control" name="part-pol" id="part-pol">
-                        <option value=""></option>
+                        <option value="">--Todos</option>
                     </select>
                   </div>
                   <div class="col-md-3" id="div-entidad-federativa">
@@ -85,7 +70,7 @@
                     </select>
                   </div>
                 <div class="col-md-3" id="div-principio-representacion">
-                    <label class="text-uppercase">Principio de representación</label>
+                    <label class="text-uppercase">P. de representación</label>
                     <select class="form-control" name="principio-rep" id="principio-rep">
                         <option value="">--Todos</option>
                         <option value="Mayoria Relativa">Mayoría Relativa</option>
@@ -134,17 +119,16 @@
         <script src="js/theme-functions.js"></script>
 
         <!-- Custom js file -->
-        <script src="js/custom.js"></script>
         <script language="javascript">
             $(document).ready(function () {
-                $("#div-partido-politico").addClass('hide');
-                $("#div-entidad-federativa").addClass('hide');
-                $("#div-principio-representacion").addClass('hide');
-                $("#div-propietario-suplente").addClass('hide');
-                $("#div-periodo-inicial").addClass('hide');
-                $("#div-periodo-final").addClass('hide');
+//                $("#div-partido-politico").addClass('hide');
+//                $("#div-entidad-federativa").addClass('hide');
+//                $("#div-principio-representacion").addClass('hide');
+//                $("#div-propietario-suplente").addClass('hide');
+//                $("#div-periodo-inicial").addClass('hide');
+//                $("#div-periodo-final").addClass('hide');
                 
-                $("#categoria3").prop("disabled", true);
+//                $("#categoria3").prop("disabled", true);
 //                $("#partido_politico").prop("disabled", true);
 
                 $("#ef_c1").change(function () {
@@ -153,15 +137,17 @@
                     var dis_cat3 = true;
                     
                     if ($(this).val() == 'federal') {
-                        option_c3 = option_c3 +"<option value='precidencia'>Presidencia de la República</option>"
-                        +"<option value='diputados'>Diputaciones</option>"
-                        +"<option value='senadores'>Senadurías</option>";
+                        option_c3 = option_c3 +"<option value='diputados'>Diputaciones</option>"
+                        +"<option value='senadores'>Senadurías</option>"
+                        +"<option value='secretaria_estado'>Secretarías</option>";
+                
                         dis_cat3 = false;
                         $('#entidad-federativa-mc').val('');
                         $("#div-entidad-federativa").addClass('hide');
                     } else if ($(this).val() == 'estatal') {
                         option_c3 = option_c3+"<option value=''>Gubernatura</option>"
-                        +"<option value='diputados'>Congresos</option>";
+                        +"<option value='secretaria_estado'>Secretarías</option>";
+                
                         dis_cat3 = false;
                         $('#entidad-federativa-mc').val('');
                         $("#div-entidad-federativa").removeClass('hide');
@@ -188,7 +174,7 @@
                         $("#div-periodo-final").removeClass('hide');
                     }
                     
-                    $("#categoria3").prop("disabled", dis_cat3);
+//                    $("#categoria3").prop("disabled", dis_cat3);
                     $("#categoria3").html(option_c3);
                     
 //                    tipo_camara = $('#tipo-camara').val();
@@ -203,13 +189,7 @@
 //                        $("#partido_politico").html(option_pp);
 //                    });
                 });
-//                
-//                $("#categoria3").change(function () {
-//                    
-//                });
-//                $("#ef_c1").change(function () {
-//                    
-//                });
+                
                 /**
                  * traemos las entidades federativas (estados)
                  */
@@ -223,7 +203,7 @@
                     $("#entidad-federativa-mc").html(option_entidades);
                 });
 
-                $.post("modelo.php", {partido_politico_mc:true}, function (data) {
+                $.post("modelo.php", {partido_politico_mcp:true}, function (data) {
                     var array_obj_pp = JSON.parse(data);
                     var option_pp = "<option value='' selected='selected'>-- Todos</option>";
                     $.each(array_obj_pp, function(index_, value_){
@@ -242,6 +222,15 @@
                     $("#periodo-fin").html(option_pp);
                 });
                 
+                $.post("modelo.php", {secretarias_mcp:true}, function (data) {
+                    var array_obj_sec = JSON.parse(data);
+                    var opt_sec = "<option value=''>--Todas</option>";
+                    $.each(array_obj_sec, function (index, value) {
+                        opt_sec = opt_sec + "<option value='"+value.secretaria+"'>"+value.secretaria+"</option>";
+                    });
+                    $('#secretarias').html(opt_sec);
+                });
+                
                 var lienso = null;
                 get_grafica('', '', '', '', '', '', '', '');
                 $('#search-data-mc').on('click', function(event){
@@ -254,14 +243,14 @@
                     var prop_sup = $('#prop-sup').val();
                     var per_ini = $("#periodo-ini").val();
                     var per_fin = $("#periodo-fin").val();
-                    
-                    get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin);
+                    var secretaria = $("#secretarias").val();
+                    get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin, secretaria);
                     
                 });
-                function get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin)
+                function get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin, secretaria)
                 {
                     $.post("modelo.php", {search_data_ag: {
-                              tipo_search: 'candidatas'
+                              tipo_search: 'cargos_publicos'
                             , e_f_:e_f
                             , cat3_:cat3
                             , part_pol_: part_pol
@@ -270,6 +259,7 @@
                             , prop_sup_ : prop_sup
                             , per_ini_ : (per_ini!=''?parseInt(per_ini):'')
                             , per_fin_ : (per_fin!=''?parseInt(per_fin):'')
+                            , secretaria_ : secretaria
                         }
                     }, function (data) {
                         if(lienso != undefined || lienso != null){

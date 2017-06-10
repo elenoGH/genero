@@ -101,7 +101,7 @@
                     , sum(totales_hombres) as totales_hombres_suma, sum(totales_mujeres) as totales_mujeres_suma
                     , legistalura, anio_ini, anio_fin
             from mujeres_electas_ine
-            where id > 0"
+            where id > 0 "
             .$and_cond.
             " and partido_politico not in ('Total')
             group by legistalura, anio_ini, anio_fin
@@ -144,19 +144,23 @@
  * Mujeres candidatas model
  */
     
-    if (isset($_POST["search_data_mc"])) {
+    if (isset($_POST["search_data_ag"])) {
 
-        $search_data = $_POST["search_data_mc"];
+        $search_data = $_POST["search_data_ag"];
         $and_cond = "";
 
         if (isset($search_data['e_f_']) && !empty($search_data['e_f_'])) {
             $and_cond = $and_cond." and f_e = '".$search_data['e_f_']."' ";
         }
         if (isset($search_data['cat3_']) && !empty($search_data['cat3_'])) {
-            $and_cond = $and_cond." and camara = '".$search_data['cat3_']."' ";
+            if ($search_data['tipo_search'] == 'candidatas') {
+                $and_cond = $and_cond." and camara = '".$search_data['cat3_']."' ";
+            } else if ($search_data['tipo_search'] == 'cargos_publicos' && $search_data['cat3_'] == 'secretaria_estado') {
+                $and_cond = $and_cond." and secretaria like '%".$search_data['secretaria_']."%' ";
+            }
         }
         if (isset($search_data['part_pol_']) && !empty($search_data['part_pol_'])) {
-            $and_cond = $and_cond." and partido_politico_mc like '%".$search_data['part_pol_']."%' ";
+            $and_cond = $and_cond." and partido_politico like '%".$search_data['part_pol_']."%' ";
         }
         if (isset($search_data['ent_fed_']) && !empty($search_data['ent_fed_'])) {
             $and_cond = $and_cond." and estado like '%".$search_data['ent_fed_']."%' ";
@@ -171,29 +175,56 @@
             $and_cond = $and_cond." and anio BETWEEN ".$search_data['per_ini_']." and ".$search_data['per_fin_']." ";
         }
         $array_data = array();
-        $sql = " SELECT 
-            MAX(anio) as anio
+        if ($search_data['tipo_search'] == 'candidatas') {
+            $sql = " SELECT 
+                MAX(anio) as anio
+               ,SUM(CASE WHEN sexo = 'Hombre' THEN 1 END) AS hombre_suma
+               ,SUM(CASE WHEN sexo = 'Mujer' THEN 1 END) AS mujer_suma
+               ,SUM(CASE WHEN sexo IS NOT NULL THEN 1 ELSE 0 END) AS total
+            from wp_ine_mujeres_candidatas
+            where id > 0 "
+            .$and_cond.
+            " GROUP BY anio
+            order by anio ";
+
+            if ($result = mysqli_query($con, $sql)) {
+                $count = 0;
+                while ($row = mysqli_fetch_row($result)) {
+
+                    $array_data[$row[0]] = array(
+                                  'anio_ini' => $row[0]
+                                , 'totales_hombres_suma' => $row[1]
+                                , 'totales_mujeres_suma' => $row[2]
+                            );
+                }
+                mysqli_free_result($result);
+            }
+        } else if ($search_data['tipo_search'] == 'cargos_publicos') {
+            $sql = " SELECT 
+            MAX(anio_ini) as anio_ini
            ,SUM(CASE WHEN sexo = 'Hombre' THEN 1 END) AS hombre_suma
            ,SUM(CASE WHEN sexo = 'Mujer' THEN 1 END) AS mujer_suma
            ,SUM(CASE WHEN sexo IS NOT NULL THEN 1 ELSE 0 END) AS total
-        from wp_ine_mujeres_candidatas
+        from wp_ine_mujeres_cargos_publicos
         where id > 0
         ".$and_cond."
-        GROUP BY anio
-        order by anio ";
-        
-        if ($result = mysqli_query($con, $sql)) {
-            $count = 0;
-            while ($row = mysqli_fetch_row($result)) {
+        GROUP BY anio_ini
+        order by anio_ini ";
 
-                $array_data[$row[0]] = array(
-                              'anio_ini' => $row[0]
-                            , 'totales_hombres_suma' => $row[1]
-                            , 'totales_mujeres_suma' => $row[2]
-                        );
+            if ($result = mysqli_query($con, $sql)) {
+                $count = 0;
+                while ($row = mysqli_fetch_row($result)) {
+
+                    $array_data[$row[0]] = array(
+                                  'anio_ini' => $row[0]
+                                , 'totales_hombres_suma' => $row[1]
+                                , 'totales_mujeres_suma' => $row[2]
+                            );
+                }
+                mysqli_free_result($result);
             }
-            mysqli_free_result($result);
         }
+        
 
         //mysqli_close($con);
         echo json_encode($array_data);
@@ -228,12 +259,37 @@
         $array_data = array();
         $and_cond = "";
                
-        $sql = " select convert(cast(convert(partido_politico_mc using latin1) as binary) using utf8) AS partido_politico_mc
+        $sql = " select convert(cast(convert(partido_politico using latin1) as binary) using utf8) AS partido_politico
             from wp_ine_mujeres_candidatas 
             where id > 0
-            and partido_politico_mc != ''
-            group by partido_politico_mc 
-            order by partido_politico_mc asc ";
+            and partido_politico != ''
+            group by partido_politico 
+            order by partido_politico asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'part_pol' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
+        if (isset($_POST['partido_politico_mcp'])) {
+        $array_data = array();
+        $and_cond = "";
+               
+        $sql = " select convert(cast(convert(partido_politico using latin1) as binary) using utf8) AS partido_politico
+                from wp_ine_mujeres_cargos_publicos 
+                where id > 0
+                and partido_politico != ''
+                group by partido_politico
+                order by partido_politico asc ";
         
         if ($result = mysqli_query($con, $sql)) {
             while ($row = mysqli_fetch_row($result)) {
@@ -262,6 +318,156 @@
             while ($row = mysqli_fetch_row($result)) {
                 $array_data[$row[0]] = array(
                             'periodo' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
+    /**
+     * mujeres cargos publicos model
+     */
+    
+    if (isset($_POST['secretarias_mcp'])) {
+        $array_data = array();
+        $and_cond = "";
+               
+        $sql = " select convert(cast(convert(secretaria using latin1) as binary) using utf8) AS secretaria
+        from wp_ine_mujeres_cargos_publicos
+        GROUP BY secretaria
+        order by secretaria asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'secretaria' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
+    /**
+     * mujeres en los organos elecorales administrativos
+     */
+    
+    if (isset($_POST["search_data_moea"])) {
+        
+        $search_data = $_POST["search_data_moea"];
+        $and_cond = "";
+        
+        if (isset($search_data['categoria_1']) && !empty($search_data['categoria_1'])) {
+            $and_cond = $and_cond." and categoria1 like '%".$search_data['categoria_1']."%' ";
+        }
+        if (isset($search_data['entidad_fed_']) && !empty($search_data['entidad_fed_'])) {
+            $and_cond = $and_cond." and estado like '%".$search_data['entidad_fed_']."%' ";
+        }
+        if (isset($search_data['tipo_cargo_']) && !empty($search_data['tipo_cargo_'])) {
+            $and_cond = $and_cond." and tipo_consejero like '%".$search_data['tipo_cargo_']."%' ";
+        }
+        $array_data = array();
+        $sql = "SELECT 
+            MAX(anio_ini) as anio_ini, MAX(anio_fin) as anio_fin
+           ,SUM(CASE WHEN sexo = 'Hombre' THEN 1 END) AS hombre_suma
+           ,SUM(CASE WHEN sexo = 'Mujer' THEN 1 END) AS mujer_suma
+           ,SUM(CASE WHEN sexo IS NOT NULL THEN 1 ELSE 0 END) AS total
+        from mujeres_oea
+        where id > 0 "
+        .$and_cond.
+        " GROUP BY anio_ini, anio_fin
+        order by anio_ini ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            $count = 0;
+            while ($row = mysqli_fetch_row($result)) {
+                if (isset($row[2])) {
+                    $th_suma = $row[2];
+                } else {
+                    $th_suma = 0;
+                }
+                if (isset($row[3])) {
+                    $tm_suma = $row[3];
+                } else {
+                    $tm_suma = 0;
+                }
+                $anio_fin = 0;
+                if (isset($row[1])) {
+                    $anio_fin = $row[1];
+                }
+                $array_data[$row[0].$anio_fin.$row[4]] = array(
+                              'anio_ini' => $row[0]
+                            , 'anio_fin' => $anio_fin
+                            , 'totales_mujeres_suma' => $tm_suma
+                            , 'totales_hombres_suma' => $th_suma
+                            , 'total'   => $row[4]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
+    if (isset($_POST['tipo_cargo_moea'])) {
+        $array_data = array();
+        $and_cond = "";
+        
+        $tipo_cargo_moea = $_POST['tipo_cargo_moea'];
+        
+        if (isset($tipo_cargo_moea['cat1_']) && !empty($tipo_cargo_moea['cat1_'])){
+            $and_cond = $and_cond." and categoria1 like '%".$tipo_cargo_moea['cat1_']."%' ";
+        }
+        if (isset($tipo_cargo_moea['entidad_']) && !empty($tipo_cargo_moea['entidad_'])){
+            $and_cond = $and_cond." and estado like '%".$tipo_cargo_moea['entidad_']."%' ";
+        }
+        
+        $sql = " select tipo_consejero
+        from mujeres_oea
+        where id > 0 "
+        .$and_cond.
+        " group by tipo_consejero
+        order by tipo_consejero asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'tipo_cons' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
+    if (isset($_POST['entidad_moea'])) {
+        $array_data = array();
+        $and_cond = "";
+               
+        $sql = " select estado
+        from mujeres_oea
+        where id > 0
+        and estado is not null "
+        .$and_cond.
+        " group by estado
+        order by estado asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'entidad_edo' => $row[0]
                         );
             }
             mysqli_free_result($result);
