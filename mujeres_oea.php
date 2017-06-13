@@ -1,31 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <link rel="shortcut icon" href="images/favicon.png">
-        <title>INE | Instito Nacional Electoral</title>
-
-        <!-- Bootstrap -->
-        <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="utilidades/fontawesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
-        <link href="utilidades/animateit/animate.min.css" rel="stylesheet">
-
-        <!-- Estilos css -->
-        <link href="css/base-ine.css" rel="stylesheet">
-        <link href="css/elementos-ine.css" rel="stylesheet">
-        <link href="css/color-ine.css" rel="stylesheet">
-        <link href="css/responsivo.css" rel="stylesheet">
-        <link href="css/custom.css" rel="stylesheet" type="text/css" media="screen" />
-
-        <!--UTILIDADES SCRIPT-->
-        <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
-        <script src="utilidades/plugins-compressed.js"></script>
-
-        <!-- SCRIPT GRAFICAS-->
-        <script src="dist/chart.js"></script>
-    </head>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="shortcut icon" href="images/favicon.png">
+    <title>Bar Chart</title>
+    <script src="dist/chart.js"></script>
+    <script src="utils.js"></script>
+    <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
+    <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
     <body class="wide">
 

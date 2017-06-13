@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link rel="shortcut icon" href="images/favicon.png">
-    <title>Bar Chart</title>
-    <script src="dist/chart.js"></script>
-    <script src="utils.js"></script>
-    <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
-    <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link rel="shortcut icon" href="images/favicon.png">
+        <title>INE | Instito Nacional Electoral</title>
+
+        <!-- Bootstrap -->
+        <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="utilidades/fontawesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+        <link href="utilidades/animateit/animate.min.css" rel="stylesheet">
+
+        <!-- Utilidades css -->
+        <link href="utilidades/owlcarousel/owl.carousel.css" rel="stylesheet">
+        <link href="utilidades/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+        <!-- Estilos css -->
+        <link href="css/base-ine.css" rel="stylesheet">
+        <link href="css/elementos-ine.css" rel="stylesheet">
+        <link href="css/color-ine.css" rel="stylesheet">
+        <link href="css/responsivo.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet" type="text/css" media="screen" />
+
+        <!--[if lt IE 9]>
+                        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+                <![endif]-->
+
+        <!-- FUENTES GOOGLE -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,800,700,600%7CRaleway:100,300,600,700,800" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+
+        <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
+        <link rel="stylesheet" property="stylesheet" href="utilidades/rs-plugin/css/settings.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="css/rs-plugin-styles.css" type="text/css" />
+
+        <!--UTILIDADES SCRIPT-->
+        <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
+        <script src="utilidades/plugins-compressed.js"></script>
+
+        <!-- SCRIPT GRAFICAS-->
+        <script src="dist/chart.js"></script>
+        <script src="utils.js"></script>
+
+        <!-- SLIDER REVOLUTION 5.x SCRIPTS  -->
+        <script type="text/javascript" src="utilidades/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+        <script type="text/javascript" src="utilidades/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    </head>
 
     <body class="wide">
 
@@ -36,16 +72,10 @@
                         <option value="">-- Todas</option>
                     </select>
                   </div>
-                  <div class="col-md-3" id="div-secretarias">
-                    <label class="text-uppercase">Secretarías</label>
-                    <select class="form-control" name="secretarias" id="secretarias">
-                        <option value="">-- Todas</option>
-                    </select>
-                  </div>
                   <div class="col-md-3" id="div-partido-politico">
                     <label class="text-uppercase">Partido Politico</label>
                     <select class="form-control" name="part-pol" id="part-pol">
-                        <option value="">--Todos</option>
+                        <option value=""></option>
                     </select>
                   </div>
                   <div class="col-md-3" id="div-entidad-federativa">
@@ -55,11 +85,10 @@
                     </select>
                   </div>
                 <div class="col-md-3" id="div-principio-representacion">
-                    <label class="text-uppercase">P. de representación</label>
+                    <label class="text-uppercase">Principio de representación</label>
                     <select class="form-control" name="principio-rep" id="principio-rep">
                         <option value="">--Todos</option>
                         <option value="Mayoria Relativa">Mayoría Relativa</option>
-                        <option value="Primera Minoria">Primera Minoria</option>
                         <option value="Representacion Proporcional">Representación Proporcional</option>
                     </select>
                   </div>
@@ -71,7 +100,7 @@
                         <option value="Suplente">Suplente</option>
                     </select>
                   </div>
-                  <!--div class="col-md-3" id="div-periodo-inicial">
+                  <div class="col-md-3" id="div-periodo-inicial">
                     <label class="text-uppercase">Periodo Inicial</label>
                     <select class="form-control" name="periodo-ini" id="periodo-ini">
                         <option value=""></option>
@@ -82,7 +111,7 @@
                     <select class="form-control" name="periodo-fin" id="periodo-fin">
                         <option value=""></option>
                     </select>
-                  </div-->
+                  </div>
                     <div class="col-md-2 m-t-30">
                     <button name="search-data-mc" type="button"
                                     id="search-data-mc"
@@ -105,84 +134,61 @@
         <script src="js/theme-functions.js"></script>
 
         <!-- Custom js file -->
+        <script src="js/custom.js"></script>
         <script language="javascript">
             $(document).ready(function () {
-                $('#part-pol').val('');
-                $('#entidad-federativa-mc').val('');
-                $('#principio-rep').val('');
-                $('#prop-sup').val('');
-//                $('#periodo-ini').val('');
-//                $('#periodo-fin').val('');
-                $('secretarias').val('');
                 $("#div-partido-politico").addClass('hide');
                 $("#div-entidad-federativa").addClass('hide');
                 $("#div-principio-representacion").addClass('hide');
                 $("#div-propietario-suplente").addClass('hide');
-//                $("#div-periodo-inicial").addClass('hide');
-//                $("#div-periodo-final").addClass('hide');
-                $("#div-secretarias").addClass('hide');
+                $("#div-periodo-inicial").addClass('hide');
+                $("#div-periodo-final").addClass('hide');
                 
-                $('#categoria3').change(function () {
-                    var cat1 = '';
-                    if ($('#categoria3').val() == 'secretaria_estado') {
-                        $("#div-secretarias").removeClass('hide');
-                        cat1 = $('#ef_c1').val();
-                        $.post("modelo.php", {secretarias_mcp:{
-                                ef_c1_:cat1
-                        }}, function (data) {
-                            var array_obj_sec = JSON.parse(data);
-                            var opt_sec = "<option value=''>--Todas</option>";
-                            $.each(array_obj_sec, function (index, value) {
-                                opt_sec = opt_sec + "<option value='"+value.secretaria+"'>"+value.secretaria+"</option>";
-                            });
-                            $('#secretarias').html(opt_sec);
-                        });
-                        
-                    } else {
-                        $('#secretarias').val('');
-                        $("#div-secretarias").addClass('hide');
-                    }
-                });
-                
+                $("#categoria3").prop("disabled", true);
+//                $("#partido_politico").prop("disabled", true);
+
                 $("#ef_c1").change(function () {
                     
                     var option_c3 = "<option value=''>-- Todas</option>";
                     var dis_cat3 = true;
                     
                     if ($(this).val() == 'federal') {
-                        option_c3 = option_c3 +"<option value='diputados'>Diputaciones</option>"
-                        +"<option value='senadores'>Senadurías</option>"
-                        +"<option value='secretaria_estado'>Secretarías</option>";
+                        option_c3 = option_c3 +"<option value='precidencia'>Presidencia de la República</option>"
+                        +"<option value='diputados'>Diputaciones</option>"
+                        +"<option value='senadores'>Senadurías</option>";
+                        dis_cat3 = false;
+                        $('#entidad-federativa-mc').val('');
+                        $("#div-entidad-federativa").addClass('hide');
                     } else if ($(this).val() == 'estatal') {
                         option_c3 = option_c3+"<option value=''>Gubernatura</option>"
-                        +"<option value='secretaria_estado'>Secretarías</option>";
-                    } 
-                    if ($(this).val() == '') {
+                        +"<option value='diputados'>Congresos</option>";
+                        dis_cat3 = false;
+                        $('#entidad-federativa-mc').val('');
+                        $("#div-entidad-federativa").removeClass('hide');
+                    } else if ($(this).val() == '') {
                         $('#part-pol').val('');
                         $('#entidad-federativa-mc').val('');
                         $('#principio-rep').val('');
                         $('#prop-sup').val('');
-//                        $('#periodo-ini').val('');
-//                        $('#periodo-fin').val('');
-                        $('secretarias').val('');
+                        $('#periodo-ini').val('');
+                        $('#periodo-fin').val('');
                         $("#div-partido-politico").addClass('hide');
                         $("#div-entidad-federativa").addClass('hide');
                         $("#div-principio-representacion").addClass('hide');
                         $("#div-propietario-suplente").addClass('hide');
-//                        $("#div-periodo-inicial").addClass('hide');
-//                        $("#div-periodo-final").addClass('hide');
-                        $("#div-secretarias").addClass('hide');
-                    } else if ($(this).val() != '') {
+                        $("#div-periodo-inicial").addClass('hide');
+                        $("#div-periodo-final").addClass('hide');
+                    } 
+                    if ($(this).val() != '') {
                         $("#div-partido-politico").removeClass('hide');
-                        $("#div-entidad-federativa").removeClass('hide');
+//                        $("#div-entidad-federativa").removeClass('hide');
                         $("#div-principio-representacion").removeClass('hide');
                         $("#div-propietario-suplente").removeClass('hide');
-//                        $("#div-periodo-inicial").removeClass('hide');
-//                        $("#div-periodo-final").removeClass('hide');
-                        $("#iv-secretarias").removeClass('hide');
+                        $("#div-periodo-inicial").removeClass('hide');
+                        $("#div-periodo-final").removeClass('hide');
                     }
                     
-//                    $("#categoria3").prop("disabled", dis_cat3);
+                    $("#categoria3").prop("disabled", dis_cat3);
                     $("#categoria3").html(option_c3);
                     
 //                    tipo_camara = $('#tipo-camara').val();
@@ -196,23 +202,18 @@
 //                        });
 //                        $("#partido_politico").html(option_pp);
 //                    });
-                    $.post("modelo.php", {secretarias_mcp:{
-                            ef_c1_:$(this).val()
-                    }}, function (data) {
-                        var array_obj_sec = JSON.parse(data);
-                        var opt_sec = "<option value=''>--Todas</option>";
-                        $.each(array_obj_sec, function (index, value) {
-                            opt_sec = opt_sec + "<option value='"+value.secretaria+"'>"+value.secretaria+"</option>";
-                        });
-                        $('#secretarias').html(opt_sec);
-                    });
-                
                 });
-                
+//                
+//                $("#categoria3").change(function () {
+//                    
+//                });
+//                $("#ef_c1").change(function () {
+//                    
+//                });
                 /**
                  * traemos las entidades federativas (estados)
                  */
-                $.post("modelo.php", {entidades_mcp:true}, function (data) {
+                $.post("modelo.php", {entidades_mc:true}, function (data) {
                     var array_obj_ent = JSON.parse(data);
                     var option_entidades = "<option value='' selected='selected'>-- Todas</option>";
                     $.each(array_obj_ent, function( index, value ) {
@@ -222,7 +223,7 @@
                     $("#entidad-federativa-mc").html(option_entidades);
                 });
 
-                $.post("modelo.php", {partido_politico_mcp:true}, function (data) {
+                $.post("modelo.php", {partido_politico_mc:true}, function (data) {
                     var array_obj_pp = JSON.parse(data);
                     var option_pp = "<option value='' selected='selected'>-- Todos</option>";
                     $.each(array_obj_pp, function(index_, value_){
@@ -231,27 +232,18 @@
                     $("#part-pol").html(option_pp);
                 });
                 
-//                $.post("modelo.php", {periodos_mc:true}, function (data) {
-//                    var array_obj_pp = JSON.parse(data);
-//                    var option_pp = "<option value='' selected='selected'>-- Todos</option>";
-//                    $.each(array_obj_pp, function(index_, value_){
-//                        option_pp = option_pp + "<option values='"+index_+"'>"+value_.periodo+"</option>";
-//                    });
-//                    $("#periodo-ini").html(option_pp);
-//                    $("#periodo-fin").html(option_pp);
-//                });
-                
-//                $.post("modelo.php", {secretarias_mcp:true}, function (data) {
-//                    var array_obj_sec = JSON.parse(data);
-//                    var opt_sec = "<option value=''>--Todas</option>";
-//                    $.each(array_obj_sec, function (index, value) {
-//                        opt_sec = opt_sec + "<option value='"+value.secretaria+"'>"+value.secretaria+"</option>";
-//                    });
-//                    $('#secretarias').html(opt_sec);
-//                });
+                $.post("modelo.php", {periodos_mc:true}, function (data) {
+                    var array_obj_pp = JSON.parse(data);
+                    var option_pp = "<option value='' selected='selected'>-- Todos</option>";
+                    $.each(array_obj_pp, function(index_, value_){
+                        option_pp = option_pp + "<option values='"+index_+"'>"+value_.periodo+"</option>";
+                    });
+                    $("#periodo-ini").html(option_pp);
+                    $("#periodo-fin").html(option_pp);
+                });
                 
                 var lienso = null;
-                get_grafica('', '', '', '', '', '', '');
+                get_grafica('', '', '', '', '', '', '', '');
                 $('#search-data-mc').on('click', function(event){
                     
                     var e_f = $('#ef_c1').val();
@@ -260,24 +252,24 @@
                     var ent_fed = $('#entidad-federativa-mc').val();
                     var princ_rep = $('#principio-rep').val();
                     var prop_sup = $('#prop-sup').val();
-//                    var per_ini = $("#periodo-ini").val();
-//                    var per_fin = $("#periodo-fin").val();
-                    var secretaria = $("#secretarias").val();
-                    get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, secretaria);
+                    var per_ini = $("#periodo-ini").val();
+                    var per_fin = $("#periodo-fin").val();
+                    
+                    get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin);
                     
                 });
-                function get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, secretaria)
+                function get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin)
                 {
-                    $.post("modelo.php", {search_data_mcp: {
-                             e_f_:e_f
+                    $.post("modelo.php", {search_data_ag: {
+                              tipo_search: 'candidatas'
+                            , e_f_:e_f
                             , cat3_:cat3
                             , part_pol_: part_pol
                             , ent_fed_ : ent_fed
                             , princ_rep_: princ_rep
                             , prop_sup_ : prop_sup
-//                            , per_ini_ : (per_ini!=''?parseInt(per_ini):'')
-//                            , per_fin_ : (per_fin!=''?parseInt(per_fin):'')
-                            , secretaria_ : secretaria
+                            , per_ini_ : (per_ini!=''?parseInt(per_ini):'')
+                            , per_fin_ : (per_fin!=''?parseInt(per_fin):'')
                         }
                     }, function (data) {
                         if(lienso != undefined || lienso != null){
@@ -289,12 +281,11 @@
                         var array_data_hombres = [0];
                         var array_data_mujeres = [0];
 
-                        $.each(array_data_search, function( index, value ) {                            
-                            array_label_x.push(value.anio_ini+'-'+value.anio_fin);
-                            array_data_hombres.push(parseInt(value.totales_hombres_suma));
-                            array_data_mujeres.push(parseInt(value.totales_mujeres_suma));
+                        $.each(array_data_search, function( index, value ) {
+                            array_label_x.push(parseInt(value.anio_ini));
+                            array_data_hombres.push(parseInt(value.totales_hombres_suma==null?0:value.totales_hombres_suma));
+                            array_data_mujeres.push(parseInt(value.totales_mujeres_suma==null?0:value.totales_mujeres_suma));
                         });
-                        
                         var datos = {
                             type: "line",
                             data : {
