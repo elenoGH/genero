@@ -49,54 +49,15 @@
     </head>
 
     <body class="wide">
+
         <!-- WRAPPER -->
         <div class="wrapper">
-          <!-- ACCESIBILIDAD -->
-          <section>
-            <div class="container">
-            <div class="row">
-              <div class="col-md-4">
-               <div class="col-md-12">
-                  <label class="text-uppercase">Categoria 2</label>
-                  <select class="form-control" name="ef_c1" id="ef_c1">
-                      <option value="">-- Todas</option>
-                      <option value="federal">Federal</option>
-                      <option value="estatal">Estatal</option>
-                  </select>
-                </div>
+
+            <!-- ACCESIBILIDAD -->
+            <section>
+              <div class="container">
+              <div class="row">
                 <div class="col-md-12">
-                  <label class="text-uppercase">Categoria 3</label>
-                  <select class="form-control" name="categoria3" id="categoria3">
-                      <option value="">-- Todas</option>
-                      <option value="">Presidencia de la República</option>
-                      <option value="">Gubernatura</option>
-                      <option value="diputados">Diputaciones</option>
-                      <option value="senadores">Senadurías</option>
-                      <option value="">Congresos</option>
-                  </select>
-                </div>
-                <div class="col-md-12">
-                  <label class="text-uppercase">Partido Politico</label>
-                  <select class="form-control" name="part-pol" id="part-pol">
-                      <option value=""></option>
-                  </select>
-                </div>
-                <div class="col-md-12" id="div-entidad-federativa">
-                  <label class="text-uppercase">Entidad federativa</label>
-                  <select class="form-control" name="entidad-federativa-mc" id="entidad-federativa-mc">
-                    <option value="" selected="selected">-- Todas</option>
-                  </select>
-                </div>
-                <div class="col-md-12">
-                  <label class="text-uppercase">Principio de representación</label>
-                  <select class="form-control" name="principio-rep" id="principio-rep">
-                      <option value="">--Todos</option>
-                      <option value="Mayoria Relativa">Mayoría Relativa</option>
-                      <option value="Representacion Proporcional">Representación Proporcional</option>
-                  </select>
-                </div>
-                <div class="col-md-12">
-<<<<<<< HEAD
                  <div class="col-md-3">
                     <label class="text-uppercase">Categoria 2</label>
                     <select class="form-control" name="ef_c1" id="ef_c1">
@@ -132,15 +93,12 @@
                     </select>
                   </div>
                 <div class="col-md-3" id="div-propietario-suplente">
-=======
->>>>>>> 42830fa0688167162d5b2e15ccd632c161d71864
                     <label class="text-uppercase">Propietario/Suplente</label>
                     <select class="form-control" name="prop-sup" id="prop-sup">
                         <option value="">--Todos</option>
                         <option value="Propietario">Propietario</option>
                         <option value="Suplente">Suplente</option>
                     </select>
-<<<<<<< HEAD
                   </div>
                   <div class="col-md-3" id="div-periodo-inicial">
                     <label class="text-uppercase">Periodo Inicial</label>
@@ -159,31 +117,16 @@
                                     id="search-data-mc"
                                     class="btn btn-primary">
                                 &nbsp;Buscar</button>
-=======
->>>>>>> 42830fa0688167162d5b2e15ccd632c161d71864
                 </div>
-                <div class="col-md-12">
-                  <label class="text-uppercase">Periodo Inicial</label>
-                  <select class="form-control" name="periodo-ini" id="periodo-ini">
-                      <option value=""></option>
-                  </select>
-                </div>
-                <div class="col-md-12">
-                  <label class="text-uppercase">Periodo Final</label>
-                  <select class="form-control" name="periodo-fin" id="periodo-fin">
-                      <option value=""></option>
-                  </select>
-                </div>
-                <div class="col-md-2 m-t-30">
-                  <button name="search-data-mc" type="button"id="search-data-mc" class="btn btn-primary">&nbsp;Buscar</button>
-                </div>
-                </div>
-              <div class="col-md-8">
-                <canvas id="chart"></canvas>
+                  </div>
+                  <br><br><br>
+                  <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <canvas id="chart"></canvas>
+              	</div>
               </div>
-            </div>
-          </section>
-      </div>
+            </section>
+        </div>
         <!-- /WRAPPER -->
         <!-- IR ARRIBA -->
 
@@ -288,7 +231,7 @@
                     });
                     $("#part-pol").html(option_pp);
                 });
-
+                
                 $.post("modelo.php", {periodos_mc:true}, function (data) {
                     var array_obj_pp = JSON.parse(data);
                     var option_pp = "<option value='' selected='selected'>-- Todos</option>";
@@ -298,11 +241,11 @@
                     $("#periodo-ini").html(option_pp);
                     $("#periodo-fin").html(option_pp);
                 });
-
+                
                 var lienso = null;
                 get_grafica('', '', '', '', '', '', '', '');
                 $('#search-data-mc').on('click', function(event){
-
+                    
                     var e_f = $('#ef_c1').val();
                     var cat3 = $('#categoria3').val();
                     var part_pol = $('#part-pol').val();
@@ -311,9 +254,9 @@
                     var prop_sup = $('#prop-sup').val();
                     var per_ini = $("#periodo-ini").val();
                     var per_fin = $("#periodo-fin").val();
-
+                    
                     get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin);
-
+                    
                 });
                 function get_grafica(e_f, cat3, part_pol, ent_fed, princ_rep, prop_sup, per_ini, per_fin)
                 {
