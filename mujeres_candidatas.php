@@ -12,73 +12,78 @@
     <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="col-md-12">
-        <div class="col-md-4">
-           <label class="text-uppercase">Categoria 2</label>
-           <select class="form-control" name="ef_c1" id="ef_c1">
-               <option value="">-- Todas</option>
-               <option value="federal">Federal</option>
-               <option value="estatal">Estatal</option>
-           </select>
-         </div>
-        <div class="col-md-4">
-          <label class="text-uppercase">Categoria 3</label>
-          <select class="form-control" name="categoria3" id="categoria3">
-              <option value="">-- Todas</option>
-          </select>
-        </div>
-        <div class="col-md-4" id="div-partido-politico">
-          <label class="text-uppercase">Partido Politico</label>
-          <select class="form-control" name="part-pol" id="part-pol">
-              <option value=""></option>
-          </select>
-        </div>
+<body class="wide">
+    <div class="wrapper">
+        <section>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                   <label class="text-uppercase">Categoria 2</label>
+                   <select class="form-control" name="ef_c1" id="ef_c1">
+                       <option value="">-- Todas</option>
+                       <option value="federal">Federal</option>
+                       <option value="estatal">Estatal</option>
+                   </select>
+                 </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <label class="text-uppercase">Categoria 3</label>
+                  <select class="form-control" name="categoria3" id="categoria3">
+                      <option value="">-- Todas</option>
+                  </select>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-partido-politico">
+                  <label class="text-uppercase">Partido Politico</label>
+                  <select class="form-control" name="part-pol" id="part-pol">
+                      <option value=""></option>
+                  </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-entidad-federativa">
+                    <label class="text-uppercase">Entidad federativa</label>
+                    <select class="form-control" name="entidad-federativa-mc" id="entidad-federativa-mc">
+                      <option value="" selected="selected">-- Todas</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-principio-representacion">
+                    <label class="text-uppercase">Principio de representación</label>
+                    <select class="form-control" name="principio-rep" id="principio-rep">
+                        <option value="">--Todos</option>
+                        <option value="Mayoria Relativa">Mayoría Relativa</option>
+                        <option value="Representacion Proporcional">Representación Proporcional</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-propietario-suplente">
+                    <label class="text-uppercase">Propietario/Suplente</label>
+                    <select class="form-control" name="prop-sup" id="prop-sup">
+                        <option value="">--Todos</option>
+                        <option value="Propietario">Propietario</option>
+                        <option value="Suplente">Suplente</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-periodo-inicial">
+                    <label class="text-uppercase">Periodo Inicial</label>
+                    <select class="form-control" name="periodo-ini" id="periodo-ini">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-periodo-final">
+                    <label class="text-uppercase">Periodo Final</label>
+                    <select class="form-control" name="periodo-fin" id="periodo-fin">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <button name="search-data-mc" type="button"
+                        id="search-data-mc"
+                        class="btn btn-primary">
+                    &nbsp;Buscar</button>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="col-md-12">
-        <div class="col-md-4" id="div-entidad-federativa">
-            <label class="text-uppercase">Entidad federativa</label>
-            <select class="form-control" name="entidad-federativa-mc" id="entidad-federativa-mc">
-              <option value="" selected="selected">-- Todas</option>
-            </select>
-        </div>
-        <div class="col-md-4" id="div-principio-representacion">
-            <label class="text-uppercase">Principio de representación</label>
-            <select class="form-control" name="principio-rep" id="principio-rep">
-                <option value="">--Todos</option>
-                <option value="Mayoria Relativa">Mayoría Relativa</option>
-                <option value="Representacion Proporcional">Representación Proporcional</option>
-            </select>
-        </div>
-        <div class="col-md-4" id="div-propietario-suplente">
-            <label class="text-uppercase">Propietario/Suplente</label>
-            <select class="form-control" name="prop-sup" id="prop-sup">
-                <option value="">--Todos</option>
-                <option value="Propietario">Propietario</option>
-                <option value="Suplente">Suplente</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="col-md-4" id="div-periodo-inicial">
-            <label class="text-uppercase">Periodo Inicial</label>
-            <select class="form-control" name="periodo-ini" id="periodo-ini">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="col-md-4" id="div-periodo-final">
-            <label class="text-uppercase">Periodo Final</label>
-            <select class="form-control" name="periodo-fin" id="periodo-fin">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <button name="search-data-mc" type="button"
-                id="search-data-mc"
-                class="btn btn-primary">
-            &nbsp;Buscar</button>
-        </div>
-    </div>
+    
     
     <div id="container" style="width: 75%;">
         <canvas id="chart"></canvas>

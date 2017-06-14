@@ -12,58 +12,56 @@
     <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-    <body class="wide">
-
-        <!-- WRAPPER -->
-        <div class="wrapper">
-
-            <!-- ACCESIBILIDAD -->
-            <section>
-              <div class="container">
-              <div class="row">
-                <div class="col-md-12">
-                 <div class="col-md-3">
-                    <label class="text-uppercase">Categoria 2</label>
-                    <select class="form-control" name="ef_c1" id="ef_c1">
-                        <option value="">-- Todas</option>
-                        <option value="federal">Federal</option>
-                        <option value="estatal">Estatal</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                    <label class="text-uppercase">Categoria 3</label>
-                    <select class="form-control" name="categoria3" id="categoria3">
-                        <option value="">-- Todas</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3" id="div-secretarias">
-                    <label class="text-uppercase">Secretarías</label>
-                    <select class="form-control" name="secretarias" id="secretarias">
-                        <option value="">-- Todas</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3" id="div-partido-politico">
-                    <label class="text-uppercase">Partido Politico</label>
-                    <select class="form-control" name="part-pol" id="part-pol">
-                        <option value="">--Todos</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3" id="div-entidad-federativa">
-                    <label class="text-uppercase">Entidad federativa</label>
-                    <select class="form-control" name="entidad-federativa-mc" id="entidad-federativa-mc">
-                      <option value="" selected="selected">-- Todas</option>
-                    </select>
-                  </div>
-                <div class="col-md-3" id="div-principio-representacion">
-                    <label class="text-uppercase">P. de representación</label>
-                    <select class="form-control" name="principio-rep" id="principio-rep">
-                        <option value="">--Todos</option>
-                        <option value="Mayoria Relativa">Mayoría Relativa</option>
-                        <option value="Primera Minoria">Primera Minoria</option>
-                        <option value="Representacion Proporcional">Representación Proporcional</option>
-                    </select>
-                  </div>
-                <div class="col-md-3" id="div-propietario-suplente">
+<body class="wide">
+    <div class="wrapper">
+        <section>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                   <label class="text-uppercase">Categoria 2</label>
+                   <select class="form-control" name="ef_c1" id="ef_c1">
+                       <option value="">-- Todas</option>
+                       <option value="federal">Federal</option>
+                       <option value="estatal">Estatal</option>
+                   </select>
+                 </div>
+                 <div class="col-sm-4 col-md-4 col-lg-4">
+                   <label class="text-uppercase">Categoria 3</label>
+                   <select class="form-control" name="categoria3" id="categoria3">
+                       <option value="">-- Todas</option>
+                   </select>
+                 </div>
+                 <div class="col-sm-4 col-md-4 col-lg-4" id="div-secretarias">
+                   <label class="text-uppercase">Secretarías</label>
+                   <select class="form-control" name="secretarias" id="secretarias">
+                       <option value="">-- Todas</option>
+                   </select>
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-partido-politico">
+                  <label class="text-uppercase">Partido Politico</label>
+                  <select class="form-control" name="part-pol" id="part-pol">
+                      <option value="">--Todos</option>
+                  </select>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-entidad-federativa">
+                  <label class="text-uppercase">Entidad federativa</label>
+                  <select class="form-control" name="entidad-federativa-mc" id="entidad-federativa-mc">
+                    <option value="" selected="selected">-- Todas</option>
+                  </select>
+                </div>
+              <div class="col-sm-4 col-md-4 col-lg-4" id="div-principio-representacion">
+                  <label class="text-uppercase">P. de representación</label>
+                  <select class="form-control" name="principio-rep" id="principio-rep">
+                      <option value="">--Todos</option>
+                      <option value="Mayoria Relativa">Mayoría Relativa</option>
+                      <option value="Primera Minoria">Primera Minoria</option>
+                      <option value="Representacion Proporcional">Representación Proporcional</option>
+                  </select>
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-propietario-suplente">
                     <label class="text-uppercase">Propietario/Suplente</label>
                     <select class="form-control" name="prop-sup" id="prop-sup">
                         <option value="">--Todos</option>
@@ -71,33 +69,34 @@
                         <option value="Suplente">Suplente</option>
                     </select>
                   </div>
-                  <!--div class="col-md-3" id="div-periodo-inicial">
+            </div>
+                  <!--div class="col-sm-4 col-md-4 col-lg-4" id="div-periodo-inicial">
                     <label class="text-uppercase">Periodo Inicial</label>
                     <select class="form-control" name="periodo-ini" id="periodo-ini">
                         <option value=""></option>
                     </select>
                   </div>
-                  <div class="col-md-3" id="div-periodo-final">
+                  <div class="col-sm-4 col-md-4 col-lg-4" id="div-periodo-final">
                     <label class="text-uppercase">Periodo Final</label>
                     <select class="form-control" name="periodo-fin" id="periodo-fin">
                         <option value=""></option>
                     </select>
                   </div-->
-                    <div class="col-md-2 m-t-30">
+            <div class="row">
+                <div class="col-md-2 m-t-30">
                     <button name="search-data-mc" type="button"
                                     id="search-data-mc"
                                     class="btn btn-primary">
                                 &nbsp;Buscar</button>
                 </div>
+            </div>
+                  </section>
                   </div>
-                  <br><br><br>
-                  <div class="row">
+            <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <canvas id="chart"></canvas>
               	</div>
               </div>
-            </section>
-        </div>
         <!-- /WRAPPER -->
         <!-- IR ARRIBA -->
 

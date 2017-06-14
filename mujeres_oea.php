@@ -12,60 +12,49 @@
     <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-    <body class="wide">
-
-        <!-- WRAPPER -->
-        <div class="wrapper">
-
-            <!-- ACCESIBILIDAD -->
-            <section>
-              <div class="container">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="col-md-3">
+<body class="wide">
+    <div class="wrapper">
+        <section>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
                     <label class="text-uppercase">Categoria 1</label>
                     <select class="form-control" name="categoria1" id="categoria1">
                         <option value="">-- Todas</option>
                         <option value="consejo_general">Consejo General del INE</option>
                         <option value="oples">OPLES</option>
                     </select>
-                  </div>
-                  <div class="col-md-3" id="div-entidad-federativa">
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4" id="div-entidad-federativa">
                     <label class="text-uppercase">Entidad federativa</label>
                     <select class="form-control" name="entidad-federativa" id="entidad-federativa">
                       <option value="" selected="selected">-- Todas</option>
                     </select>
-                  </div>
-                  <div class="col-md-3">
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
                     <label class="text-uppercase">Tipo de Cargo</label>
                     <select class="form-control" name="tipo-cargo" id="tipo-cargo">
                         <option value="" selected="selected">-- Todos</option>
                     </select>
-                  </div>
-                  <div class="col-md-2 m-t-30">
-                    <button name="search-data" type="button"
-                                    id="search-data"
-                                    style="display: block; margin: 0 auto;"
-                                    class="btn btn-primary">
-                                &nbsp;Buscar</button>
-                  </div>
                 </div>
-                  </div>
-                  <br><br><br>
-                  <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <canvas id="chart"></canvas>
-              	</div>
-              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <button name="search-data" type="button"
+                            id="search-data"
+                            style="display: block; margin: 0 auto;"
+                            class="btn btn-primary">
+                        &nbsp;Buscar</button>
+                </div>
+            </div>
             </section>
         </div>
-        <!-- /WRAPPER -->
-        <!-- IR ARRIBA -->
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <canvas id="chart"></canvas>
+            </div>
+        </div>
 
-        <!-- Componenetes -->
         <script src="js/theme-functions.js"></script>
-
-        <!-- Custom js file -->
         <script src="js/custom.js"></script>
         <script language="javascript">
             $(document).ready(function () {
