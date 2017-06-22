@@ -310,12 +310,21 @@
     }
     
     if (isset($_POST["entidades_mc"])) {
+        
+        $entidades_mc = $_POST["entidades_mc"];
+        $and_cond = "";
+        
+        if (isset($entidades_mc['by_e_f_']) && !empty($entidades_mc['by_e_f_'])) {
+            $and_cond = " and f_e = '".$entidades_mc['by_e_f_']."' ";
+        }
+        
         $array_data = array();
         $sql = " select convert(cast(convert(estado using latin1) as binary) using utf8) AS estado
             from wp_ine_mujeres_candidatas
             where estado is not null
-            and estado != ''
-            GROUP by estado
+            and estado != '' "
+            .$and_cond.
+            " GROUP by estado
             order by estado asc ";
         
         if ($result = mysqli_query($con, $sql)) {
