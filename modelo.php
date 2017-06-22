@@ -342,12 +342,21 @@
     }
     
     if (isset($_POST["entidades_mcp"])) {
+        
         $array_data = array();
+        $entidades_mcp = $_POST["entidades_mcp"];
+        $and_cond = "";
+        
+        if (isset($entidades_mcp['by_e_f_']) && !empty($entidades_mcp['by_e_f_'])) {
+            $and_cond = " and f_e = '".$entidades_mcp['by_e_f_']."' ";
+        }
+        
         $sql = " select estado
             from mujeres_cargos_publicos 
             where id > 0
-            and estado != ''
-            group by estado
+            and estado != '' "
+            .$and_cond.
+            " group by estado
             order by estado asc ";
         
         if ($result = mysqli_query($con, $sql)) {

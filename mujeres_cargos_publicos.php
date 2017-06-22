@@ -152,10 +152,13 @@
                         option_c3 = option_c3 +"<option value='diputados'>Diputaciones</option>"
                         +"<option value='senadores'>Senadurías</option>"
                         +"<option value='secretaria_estado'>Secretarías</option>";
+                        get_ent_fed('federal');
                     } else if ($(this).val() == 'estatal') {
                         option_c3 = option_c3+"<option value=''>Gubernatura</option>"
                         +"<option value='secretaria_estado'>Secretarías</option>";
+                        get_ent_fed('estatal');
                     } 
+                    
                     if ($(this).val() == '') {
                         $('#part-pol').val('');
                         $('#entidad-federativa-mc').val('');
@@ -171,6 +174,7 @@
 //                        $("#div-periodo-inicial").addClass('hide');
 //                        $("#div-periodo-final").addClass('hide');
                         $("#div-secretarias").addClass('hide');
+                        get_ent_fed('');
                     } else if ($(this).val() != '') {
                         $("#div-partido-politico").removeClass('hide');
                         $("#div-entidad-federativa").removeClass('hide');
@@ -181,6 +185,36 @@
                         $("#iv-secretarias").removeClass('hide');
                     }
                     
+                    get_ent_fed('');
+                    
+                    function get_ent_fed(by_){
+//                        $.post("modelo.php", {entidades_mc:{
+//                                by_e_f_: by_
+//                        }}, function (data) {
+//                            var array_obj_ent = JSON.parse(data);
+//                            var option_entidades = "<option value='' selected='selected'>-- Todas</option>";
+//                            $.each(array_obj_ent, function( index, value ) {
+//                                option_entidades = option_entidades + "<option value='"+index+"'>"+value.estado+"</option>";
+//                            });
+//
+//                            $("#entidad-federativa-mc").html(option_entidades);
+//                        });
+                            /**
+                            * traemos las entidades federativas (estados)
+                            */
+                           $.post("modelo.php", {entidades_mcp:{
+                                   by_e_f_: by_
+                           }}, function (data) {
+                               var array_obj_ent = JSON.parse(data);
+                               var option_entidades = "<option value='' selected='selected'>-- Todas</option>";
+                               $.each(array_obj_ent, function( index, value ) {
+                                   option_entidades = option_entidades + "<option value='"+index+"'>"+value.estado+"</option>";
+                               });
+
+                               $("#entidad-federativa-mc").html(option_entidades);
+                           });
+                
+                    }
 //                    $("#categoria3").prop("disabled", dis_cat3);
                     $("#categoria3").html(option_c3);
                     
@@ -208,19 +242,6 @@
                 
                 });
                 
-                /**
-                 * traemos las entidades federativas (estados)
-                 */
-                $.post("modelo.php", {entidades_mcp:true}, function (data) {
-                    var array_obj_ent = JSON.parse(data);
-                    var option_entidades = "<option value='' selected='selected'>-- Todas</option>";
-                    $.each(array_obj_ent, function( index, value ) {
-                        option_entidades = option_entidades + "<option value='"+index+"'>"+value.estado+"</option>";
-                    });
-
-                    $("#entidad-federativa-mc").html(option_entidades);
-                });
-
                 $.post("modelo.php", {partido_politico_mcp:true}, function (data) {
                     var array_obj_pp = JSON.parse(data);
                     var option_pp = "<option value='' selected='selected'>-- Todos</option>";
