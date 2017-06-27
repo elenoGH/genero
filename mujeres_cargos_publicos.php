@@ -10,6 +10,7 @@
     <script src="utils.js"></script>
     <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
     <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="estilos.css" rel="stylesheet">
 </head>
 
 <body class="wide">
@@ -83,7 +84,7 @@
                     </select>
                   </div-->
             <div class="row">
-                <div class="col-md-2 m-t-30">
+                <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px; margin-bottom: 20px;text-align: right;">
                     <button name="search-data-mc" type="button"
                                     id="search-data-mc"
                                     class="btn btn-primary">
@@ -92,7 +93,7 @@
             </div>
                   </section>
                   </div>
-            <div class="row">
+            <div class="col-sm-12">
                 <div class="col-md-10 col-md-offset-1">
                     <canvas id="chart"></canvas>
               	</div>
