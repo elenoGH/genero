@@ -10,6 +10,7 @@
     <script src="utils.js"></script>
     <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
     <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="estilos.css" rel="stylesheet">
 </head>
 
 <body class="wide">
@@ -74,7 +75,7 @@
                         <option value=""></option>
                     </select>
                 </div-->
-                <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px; margin-bottom: 20px;text-align: right;">
                     <button name="search-data-mc" type="button"
                         id="search-data-mc"
                         class="btn btn-primary">
@@ -85,7 +86,7 @@
     </div>
     
     
-    <div id="container" style="width: 75%;">
+    <div id="container">
         <canvas id="chart"></canvas>
     </div>
     <script>
@@ -113,7 +114,7 @@
                     $("#div-entidad-federativa").removeClass('hide');
                     get_ent_fed('federal');
                 } else if ($(this).val() == 'estatal') {
-                    option_c3 = option_c3+"<option value=''>Gubernatura</option>"
+                    option_c3 = option_c3+"<option value='gubernatura'>Gubernatura</option>"
                     +"<option value='diputados'>Congresos</option>";
                     dis_cat3 = false;
                     $('#entidad-federativa-mc').val('');
