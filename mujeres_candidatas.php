@@ -99,7 +99,20 @@
 //            $("#div-periodo-final").addClass('hide');
 
             $("#categoria3").prop("disabled", true);
-
+            
+            $('#categoria3').change(function () {
+                $.post("modelo.php", {partido_politico_mc:{
+                        categoria3_ : $(this).val()
+                }}, function (data) {
+                    var array_obj_pp = JSON.parse(data);
+                    var option_pp = "<option value='' selected='selected'>-- Todos</option>";
+                    $.each(array_obj_pp, function(index_, value_){
+                        option_pp = option_pp + "<option values='"+index_+"'>"+value_.part_pol+"</option>";
+                    });
+                    $("#part-pol").html(option_pp);
+                });
+            });
+            
             $("#ef_c1").change(function () {
                     
                 var option_c3 = "<option value=''>-- Todas</option>";

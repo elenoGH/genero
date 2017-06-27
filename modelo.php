@@ -376,12 +376,18 @@
     if (isset($_POST['partido_politico_mc'])) {
         $array_data = array();
         $and_cond = "";
-               
+        
+        $partido_politico_mc = $_POST['partido_politico_mc'];
+        if (isset($partido_politico_mc['categoria3_']) && !empty($partido_politico_mc['categoria3_'])) {
+            $and_cond = $and_cond." and camara = '".$partido_politico_mc['categoria3_']."' ";
+        }
+                
         $sql = " select convert(cast(convert(partido_politico using latin1) as binary) using utf8) AS partido_politico
             from wp_ine_mujeres_candidatas 
             where id > 0
-            and partido_politico != ''
-            group by partido_politico 
+            and partido_politico != '' "
+            .$and_cond.
+            " group by partido_politico 
             order by partido_politico asc ";
         
         if ($result = mysqli_query($con, $sql)) {
