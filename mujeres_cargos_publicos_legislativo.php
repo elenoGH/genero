@@ -28,7 +28,7 @@
                         <label class="text-uppercase">Cargo</label>
                         <select class="form-control" name="cargo" id="cargo">
                             <option value="">-- Todas</option>
-                            <option value="congresos">Diputaciones</option>
+                            <option value="Diputaciones">Diputaciones</option>
                         </select>
                     </div>
                     <div class="col-sm-4 col-md-4 col-lg-4" id="div-entidad-federativa">
@@ -87,7 +87,7 @@
                         <label class="text-uppercase">Propietario/Suplente</label>
                         <select class="form-control" name="prop-sup" id="prop-sup">
                             <option value="">--Todos</option>
-                            <option value="Propietario">Propietario</option>
+                            <option value="Propietario">Propietario/a</option>
                             <option value="Suplente">Suplente</option>
                         </select>
                     </div>
