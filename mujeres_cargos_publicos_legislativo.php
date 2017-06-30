@@ -158,7 +158,7 @@ canvas {
                 var array_obj = JSON.parse(data);
                 var opt_sec = "<option value=''>--Todos</option>";
                 $.each(array_obj, function (index, value) {
-                    opt_sec = opt_sec + "<option value='" + value.part_pol + "'>" + value.part_pol + "</option>";
+                    opt_sec = opt_sec + "<option value='" + value.part_pol + "'>" + value.part_pol +' '+value.desc_pp+ "</option>";
                 });
                 $('#partido-politico').html(opt_sec);
             });
@@ -294,31 +294,20 @@ canvas {
                     }
                 });
                 
-//                window.onload = function() {
-                    var ctx = document.getElementById("canvas").getContext("2d");
-                    lienso = new Chart(ctx, {
-                        type: 'bar',
-                        data: barChartData,
-                        options: {
-                            responsive: true,
-                            title: {
-                                display: true,
-                                text: 'Mujeres y Hombres en cargos públicos'
-                            },
-                        }
-                    });
-                    window.myBar = lienso;
-//                };
-        
-//                document.getElementById('randomizeData').addEventListener('click', function() {
-//                    barChartData.datasets.forEach(function(dataset) {
-//                        dataset.data = dataset.data.map(function() {
-//                            return randomScalingFactor();
-//                        })
-//                    });
-//                    window.myBar.update();
-//                });
-                /*****/
+                var ctx = document.getElementById("canvas").getContext("2d");
+                lienso = new Chart(ctx, {
+                    type: 'bar',
+                    data: barChartData,
+                    options: {
+                        responsive: true,
+                        title: {
+                            display: true,
+                            text: 'Mujeres y Hombres en cargos públicos'
+                        },
+                    }
+                });
+                window.myBar = lienso;
+
                 
             });
         }

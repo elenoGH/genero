@@ -39,7 +39,7 @@
         if (isset($partido_politico_mcpl['ent_fed_'])) {
             $and_cond = $and_cond." and entidad_federativa = '".$partido_politico_mcpl['ent_fed_']."' ";
         }
-        $sql = " select partido_politico
+        $sql = " select partido_politico, descripcion_pp
         from mujeres_cargos_publicos
         where id > 0 "
         .$and_cond.
@@ -50,6 +50,7 @@
             while ($row = mysqli_fetch_row($result)) {
                 $array_data[$row[0]] = array(
                             'part_pol' => $row[0]
+                            , 'desc_pp' => $row[1]
                         );
             }
             mysqli_free_result($result);
@@ -357,23 +358,17 @@
         if ($result = mysqli_query($con, $sql)) {
             $count = 0;
             while ($row = mysqli_fetch_row($result)) {
+                $th_suma = 0;
                 if (isset($row[2])) {
                     $th_suma = $row[2];
-                } else {
-                    $th_suma = 0;
                 }
+                $tm_suma = 0;
                 if (isset($row[3])) {
                     $tm_suma = $row[3];
-                } else {
-                    $tm_suma = 0;
                 }
-                $anio_fin = 0;
-                if (isset($row[1])) {
-                    $anio_fin = $row[1];
-                }
-                $array_data[$row[0].$anio_fin.$row[4]] = array(
+                $array_data[$row[0].$row[1]] = array(
                               'anio_ini' => $row[0]
-                            , 'anio_fin' => $anio_fin
+                            , 'anio_fin' => $row[1]
                             , 'totales_mujeres_suma' => $tm_suma
                             , 'totales_hombres_suma' => $th_suma
                             , 'total'   => $row[4]
