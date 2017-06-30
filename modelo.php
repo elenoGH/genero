@@ -1,6 +1,93 @@
 <?php
     require 'connection_db.php';
     
+    /**
+     * inicio mujeres cargos publicos legislativo
+     */
+    if (isset($_POST['entidad_federativa_mcpl'])) {
+        
+        $entidad_federativa_mcpl = $_POST['entidad_federativa_mcpl'];
+        
+        $and_cond = "";
+        
+        $sql = " select entidad_federativa
+            from mujeres_cargos_publicos
+            where id >0 "
+            .$and_cond.
+            " group by entidad_federativa
+            order by entidad_federativa asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'entidad_federativa' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    if (isset($_POST['partido_politico_mcpl'])) {
+        $array_data = array();
+        $partido_politico_mcpl = $_POST['partido_politico_mcpl'];
+        
+        $and_cond = "";
+        
+        if (isset($partido_politico_mcpl['ent_fed_'])) {
+            $and_cond = $and_cond." and entidad_federativa = '".$partido_politico_mcpl['ent_fed_']."' ";
+        }
+        $sql = " select partido_politico
+        from mujeres_cargos_publicos
+        where id > 0 "
+        .$and_cond.
+        " group by partido_politico
+        order by partido_politico asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'part_pol' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    if (isset($_POST['principio_representacion_mcpl'])) {
+        $principio_representacion_mcpl = $_POST['principio_representacion_mcpl'];
+        
+        $and_cond = "";
+        
+        $sql = " select principio_representacion
+        from mujeres_cargos_publicos
+        where id > 0 "
+        .$and_cond.
+        " group by principio_representacion
+        order by principio_representacion asc ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            while ($row = mysqli_fetch_row($result)) {
+                $array_data[$row[0]] = array(
+                            'principio_representacion' => $row[0]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    /**
+     * fin mujeres cargos publicos legislativo
+     */
+    
     if (isset($_POST["entidades"])) {
         $array_data = array();
         $sql = " select estado
@@ -230,7 +317,78 @@
         echo json_encode($array_data);
         die;
     }
+    if (isset($_POST["search_data_mcpl"])) {
 
+        $search_data = $_POST["search_data_mcpl"];
+        $and_cond = "";
+
+        if (isset($search_data['nivel_gobierno_']) && !empty($search_data['nivel_gobierno_'])) {
+            $and_cond = $and_cond." and nivel_gobierno = '".$search_data['nivel_gobierno_']."' ";
+        }
+        if (isset($search_data['cargo_']) && !empty($search_data['cargo_'])) {
+            $and_cond = $and_cond." and cargo = '".$search_data['cargo_']."'";
+        }
+        if (isset($search_data['entidad_federativa_mcpl_']) && !empty($search_data['entidad_federativa_mcpl_'])) {
+            $and_cond = $and_cond." and entidad_federativa = '".$search_data['entidad_federativa_mcpl_']."' ";
+        }
+        if (isset($search_data['partido_politico_']) && !empty($search_data['partido_politico_'])) {
+            $and_cond = $and_cond." and partido_politico = '".$search_data['partido_politico_']."' ";
+        }
+        if (isset($search_data['principio_rep_']) && !empty($search_data['principio_rep_'])) {
+            $and_cond = $and_cond." and principio_representacion = '".$search_data['principio_rep_']."' ";
+        }
+        if (isset($search_data['prop_sup_']) && !empty($search_data['prop_sup_'])) {
+            $and_cond = $and_cond." and propietario_suplente = '".$search_data['prop_sup_']."' ";
+        }
+        
+        $array_data = array();
+
+        $sql = " SELECT 
+            MAX(anio_ini) as anio_ini, MAX(anio_fin) as anio_fin
+           ,SUM(CASE WHEN sexo = 'Hombre' THEN 1 END) AS hombre_suma
+           ,SUM(CASE WHEN sexo = 'Mujer' THEN 1 END) AS mujer_suma
+           ,SUM(CASE WHEN sexo IS NOT NULL THEN 1 ELSE 0 END) AS total
+        from mujeres_cargos_publicos
+        where id > 0 
+        ".$and_cond."
+        GROUP BY anio_ini, anio_fin
+        order by anio_ini ";
+        
+        if ($result = mysqli_query($con, $sql)) {
+            $count = 0;
+            while ($row = mysqli_fetch_row($result)) {
+                if (isset($row[2])) {
+                    $th_suma = $row[2];
+                } else {
+                    $th_suma = 0;
+                }
+                if (isset($row[3])) {
+                    $tm_suma = $row[3];
+                } else {
+                    $tm_suma = 0;
+                }
+                $anio_fin = 0;
+                if (isset($row[1])) {
+                    $anio_fin = $row[1];
+                }
+                $array_data[$row[0].$anio_fin.$row[4]] = array(
+                              'anio_ini' => $row[0]
+                            , 'anio_fin' => $anio_fin
+                            , 'totales_mujeres_suma' => $tm_suma
+                            , 'totales_hombres_suma' => $th_suma
+                            , 'total'   => $row[4]
+                        );
+            }
+            mysqli_free_result($result);
+        }
+        
+        
+
+        //mysqli_close($con);
+        echo json_encode($array_data);
+        die;
+    }
+    
 /**
  * mujeres cargo publico
  */
