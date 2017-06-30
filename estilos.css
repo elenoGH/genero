@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+
+select{
+margin-bottom: 35px;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #d50080;
+    border-color: #d50080;
+}
