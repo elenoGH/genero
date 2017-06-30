@@ -10,6 +10,7 @@
     <script src="utils.js"></script>
     <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
     <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="estilos.css" rel="stylesheet">
 </head>
 
     <body class="wide">

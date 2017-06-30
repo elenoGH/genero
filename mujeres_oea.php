@@ -17,7 +17,7 @@
         <section>
             <div class="row">
                 <div class="col-sm-4 col-md-4 col-lg-4">
-                    <label class="text-uppercase">Categoria 1</label>
+                    <label class="text-uppercase">Periodo</label>
                     <select class="form-control" name="categoria1" id="categoria1">
                         <option value="">-- Todas</option>
                         <option value="consejo_general">Consejo General del INE</option>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 col-md-4 col-lg-4">
+                <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 20px; margin-bottom: 20px;text-align: right;">
                     <button name="search-data" type="button"
                             id="search-data"
                             style="display: block; margin: 0 auto;"

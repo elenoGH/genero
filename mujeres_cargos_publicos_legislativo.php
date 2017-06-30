@@ -5,8 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="shortcut icon" href="images/favicon.png">
-        <title>Bar Chart</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+        <title></title>
+        <script src="Chart.bundle.js"></script>
+        <script src="utils.js"></script>
         <script src="utilidades/jquery/jquery-1.11.2.min.js"></script>
         <link href="utilidades/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="estilos.css" rel="stylesheet">
@@ -34,6 +35,38 @@
                         <label class="text-uppercase">Entidad Federativa</label>
                         <select class="form-control" name="entidad-federativa-mcpl" id="entidad-federativa-mcpl">
                             <option value="" selected="selected">-- Todas</option>
+                            <option value="Aguascalientes">Aguascalientes</option>
+                            <option value="Baja California">Baja California</option>
+                            <option value="Baja California Sur">Baja California Sur</option>
+                            <option value="Campeche">Campeche</option>
+                            <option value="Chiapas">Chiapas</option>
+                            <option value="Chihuahua">Chihuahua</option>
+                            <option value="Ciudad de México">Ciudad de México</option>
+                            <option value="Coahuila">Coahuila</option>
+                            <option value="Colima">Colima</option>
+                            <option value="Durango">Durango</option>
+                            <option value="Guanajuato">Guanajuato</option>
+                            <option value="Guerrero">Guerrero</option>
+                            <option value="Hidalgo">Hidalgo</option>
+                            <option value="Jalisco">Jalisco</option>
+                            <option value="México">México</option>
+                            <option value="Michoacán">Michoacán</option>
+                            <option value="Morelos">Morelos</option>
+                            <option value="Nayarit">Nayarit</option>
+                            <option value="Nuevo León">Nuevo León</option>
+                            <option value="Oaxaca">Oaxaca</option>
+                            <option value="Puebla">Puebla</option>
+                            <option value="Querétaro">Querétaro</option>
+                            <option value="Quintana Roo">Quintana Roo</option>
+                            <option value="San Luis Potosí">San Luis Potosí</option>
+                            <option value="Sinaloa">Sinaloa</option>
+                            <option value="Sonora">Sonora</option>
+                            <option value="Tabasco">Tabasco</option>
+                            <option value="Tamaulipas">Tamaulipas</option>
+                            <option value="Tlaxcala">Tlaxcala</option>
+                            <option value="Veracruz">Veracruz</option>
+                            <option value="Yucatán">Yucatán</option>
+                            <option value="Zacatecas">Zacatecas</option>
                         </select>
                     </div>
                 </div>
@@ -71,9 +104,7 @@
         </div>
         <div class="col-sm-12">
             <div class="col-md-10">
-                    <div class="consex"><div class="hombre"></div>Hombre</div>
-                    <div class="consex"><div class="mujer"></div>Mujer</div>
-                <canvas id="grafica_mc" style="width: 100%; height: 95%"></canvas>
+                <canvas id="canvas"></canvas>
             </div>
             <br/>
             <div class="col-md-10">
@@ -87,27 +118,11 @@
                 </h4>
             </div>
         </div>
-<style type="text/css">
-.hombre{
-	width:45px;
-	height:14px;
-	background-color:#79d1cf;
-	border:3px solid #099;
-	float:left;
-	margin-right:4px;
-}
-.mujer{
-	width:45px;
-	height:14px;
-	background-color:#3ca807;
-	border:3px solid #2c7b05;
-	float:left;
-	margin-right:4px;
-}
-.consex{
-	width:110px;
-	height:18px;
-	float:left;
+<style>
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 </style>
         <!-- Custom js file -->
@@ -121,18 +136,18 @@
         $( "#p_princ_rep" ).text('Todos');
         $( "#p_pro_sup" ).text('Todos');
         
-        get_entidadFederativa();
-        function get_entidadFederativa()
-        {
-            $.post("modelo.php", {entidad_federativa_mcpl: true}, function (data) {
-                var array_obj = JSON.parse(data);
-                var opt_sec = "<option value=''>--Todas</option>";
-                $.each(array_obj, function (index, value) {
-                    opt_sec = opt_sec + "<option value='" + value.entidad_federativa + "'>" + value.entidad_federativa + "</option>";
-                });
-                $('#entidad-federativa-mcpl').html(opt_sec);
-            });
-        }
+//        get_entidadFederativa();
+//        function get_entidadFederativa()
+//        {
+//            $.post("modelo.php", {entidad_federativa_mcpl: true}, function (data) {
+//                var array_obj = JSON.parse(data);
+//                var opt_sec = "<option value=''>--Todas</option>";
+//                $.each(array_obj, function (index, value) {
+//                    opt_sec = opt_sec + "<option value='" + value.entidad_federativa + "'>" + value.entidad_federativa + "</option>";
+//                });
+//                $('#entidad-federativa-mcpl').html(opt_sec);
+//            });
+//        }
         
         get_partidoPolitico('');
         function get_partidoPolitico(ent_fed)
@@ -199,8 +214,10 @@
             var prop_sup = $('#prop-sup').val();
             
             get_grafica(nivel_gobierno, cargo, entidad_federativa_mcpl, partido_politico, principio_rep, prop_sup);
+            window.myBar.update();
 
         });
+        var color = Chart.helpers.color;
         function get_grafica(nivel_gobierno, cargo, entidad_federativa_mcpl, partido_politico, principio_rep, prop_sup)
         {
             $.post("modelo.php", {search_data_mcpl: {
@@ -212,7 +229,7 @@
                     , prop_sup_: prop_sup
                 }
             }, function (data) {
-                if (lienso != undefined || lienso != null) {
+                if(lienso != undefined || lienso != null){
                     lienso.destroy();
                 }
                 console.log(JSON.parse(data));
@@ -226,79 +243,87 @@
                     array_data_hombres.push(parseInt(value.totales_hombres_suma));
                     array_data_mujeres.push(parseInt(value.totales_mujeres_suma));
                 });
-
-                var chartData = {
+                /*****/
+                var barChartData = {
+                    labels: array_label_x,
                     datasets: [{
-                            label: "Hombres",
-                            fillColor: "#79D1CF",
-                            strokeColor: "#79D1CF",
-                            fill: true,
-                            lineTension: 0,
-                            backgroundColor: "rgba(201,91,50,0.1)",
-                            borderColor: "rgba(201,91,50,1)",
-                            borderCapStyle: 'butt',
-                            borderDash: [],
-                            borderDashOffset: 0.0,
-                            borderJoinStyle: 'miter',
-                            pointBorderColor: "rgba(201,91,50,1)",
-                            pointBackgroundColor: "#fff",
-                            pointBorderWidth: 1,
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(201,91,50,1)",
-                            pointHoverBorderColor: "rgba(220,220,220,1)",
-                            pointHoverBorderWidth: 2,
-                            pointRadius: 1,
-                            pointHitRadius: 10,
-                            data: array_data_hombres,
-                            spanGaps: false,
-                        }, {
-                            label: "Mujeres",
-                            fillColor: "#3ca807",
-                            strokeColor: "#3ca807",
-                            fill: true,
-                            lineTension: 0,
-                            backgroundColor: "rgba(0,150,136,0.1)",
-                            borderColor: "rgba(0,150,136,1)",
-                            borderCapStyle: 'butt',
-                            borderDash: [],
-                            borderDashOffset: 0.0,
-                            borderJoinStyle: 'miter',
-                            pointBorderColor: "rgba(0,150,136,1)",
-                            pointBackgroundColor: "#fff",
-                            pointBorderWidth: 1,
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(0,150,136,1)",
-                            pointHoverBorderColor: "rgba(220,220,220,1)",
-                            pointHoverBorderWidth: 2,
-                            pointRadius: 1,
-                            pointHitRadius: 10,
-                            data: array_data_mujeres,
-                            spanGaps: false,
-                        }],
-                    labels: array_label_x
+                        type: 'bar',
+                        label: 'Hombre',
+                        backgroundColor: "#79D1CF",
+                        borderColor: "#4c8382",
+                        data: array_data_hombres
+                    }, {
+                        type: 'bar',
+                        label: 'Mujer',
+                        backgroundColor: "#3ca807",
+                        borderColor: "#266407",
+                        data: array_data_mujeres
+                    }]
                 };
+                // Define a plugin to provide data labels
+                Chart.plugins.register({
+                    afterDatasetsDraw: function(chart, easing) {
+                        // To only draw at the end of animation, check for easing === 1
+                        var ctx = chart.ctx;
 
-                var ctx = document.getElementById("grafica_mc").getContext("2d");
-                var myBar = new Chart(ctx).Bar(chartData, {
-                    showTooltips: false,
-                    onAnimationComplete: function () {
+                        chart.data.datasets.forEach(function (dataset, i) {
+                            var meta = chart.getDatasetMeta(i);
+                            if (!meta.hidden) {
+                                meta.data.forEach(function(element, index) {
+                                    // Draw the text in black, with the specified font
+                                    ctx.fillStyle = 'rgb(0, 0, 0)';
 
-                        var ctx = this.chart.ctx;
-                        ctx.font = this.scale.font;
-                        ctx.fillStyle = this.scale.textColor
-                        ctx.textAlign = "center";
-                        ctx.textBaseline = "bottom";
+                                    var fontSize = 25;
+                                    var fontStyle = 'normal';
+                                    var fontFamily = 'Helvetica Neue';
+                                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-                        this.datasets.forEach(function (dataset) {
-                            dataset.bars.forEach(function (bar) {
-                                ctx.fillText(bar.value, bar.x, bar.y - 5);
-                            });
-                        })
+                                    // Just naively convert to string for now
+                                    var dataString = dataset.data[index].toString();
+
+                                    // Make sure alignment settings are correct
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+
+                                    var padding = 5;
+                                    var position = element.tooltipPosition();
+                                    ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+                                });
+                            }
+                        });
                     }
                 });
+                
+//                window.onload = function() {
+                    var ctx = document.getElementById("canvas").getContext("2d");
+                    lienso = new Chart(ctx, {
+                        type: 'bar',
+                        data: barChartData,
+                        options: {
+                            responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Mujeres y Hombres en cargos públicos'
+                            },
+                        }
+                    });
+                    window.myBar = lienso;
+//                };
+        
+//                document.getElementById('randomizeData').addEventListener('click', function() {
+//                    barChartData.datasets.forEach(function(dataset) {
+//                        dataset.data = dataset.data.map(function() {
+//                            return randomScalingFactor();
+//                        })
+//                    });
+//                    window.myBar.update();
+//                });
+                /*****/
+                
             });
         }
     });
 </script>
+<script src="Chart.bundle.js"></script>
     </body>
 </html>

@@ -16,7 +16,7 @@
             <section>
                 <div class="row">
                     <div class="col-sm-4 col-md-4 col-lg-4">
-                        <label class="text-uppercase">Categoria 2</label>
+                        <label class="text-uppercase">Nivel de Gobierno</label>
                         <select class="form-control" name="ef_c1" id="ef_c1">
                             <option value="">-- Todas</option>
                             <option value="federal">Federal</option>
@@ -24,7 +24,7 @@
                         </select>
                     </div>
                     <div class="col-sm-4 col-md-4 col-lg-4">
-                        <label class="text-uppercase">Categoria 3</label>
+                        <label class="text-uppercase">Cargo</label>
                         <select class="form-control" name="categoria3" id="categoria3">
                             <option value="">-- Todas</option>
                         </select>
