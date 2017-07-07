@@ -178,6 +178,7 @@ canvas {
         
         $("#nivel-gobierno").change(function () {
             $( "#p_nivel_gob" ).text($(this).val()==''?'Todos':$(this).val());
+            
         });
         $("#cargo").change(function () {
             $( "#p_cargo" ).text($(this).val()==''?'Todos':$(this).val());
@@ -273,9 +274,9 @@ canvas {
                                     // Draw the text in black, with the specified font
                                     ctx.fillStyle = 'rgb(0, 0, 0)';
 
-                                    var fontSize = 25;
+                                    var fontSize = 14;
                                     var fontStyle = 'normal';
-                                    var fontFamily = 'Helvetica Neue';
+                                    var fontFamily = '"Roboto", Sans-serif';
                                     ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
                                     // Just naively convert to string for now
